@@ -29,7 +29,7 @@ Users should be able to:
 
 ### Links
 
-- Live Site URL: [Add live site URL here](https://crayonblack.github.io/index.html)
+- Live Site URL: [Add live site URL here](https://crayonblack.github.io)
 
 ## My process
 
@@ -116,5 +116,5 @@ But I feel now is the time for me to tackle learning Angular & Vue.
 
 ## Author
 
-- Website - Craig du Toit
+- Author - Craig du Toit
 - Instagram - [@craigdutoitza](https://www.instagram.com/craigdutoitza/)
