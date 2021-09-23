@@ -1,0 +1,26 @@
+.rules
+    position: fixed
+    right: 20px
+    bottom: 20px
+    z-index: 3
+    @media screen and (max-width: 800px)
+        right: initial
+        bottom: 10px
+        width: 100%
+    .button
+        padding: 10px 30px
+        color: $white
+        font-size: 1.2em
+        text-transform: uppercase
+        border: 1px solid $white
+        +vendor-prefix('border-radius','8px')
+        +vendor-prefix('transition','all 0.3s ease-in-out')
+        @media screen and (max-width: 800px)
+            width: max-content
+            margin: 0px auto
+            font-size: 1em
+            padding: 6px 18px
+        &:hover
+            background: $white
+            color: $black
+            cursor: pointer

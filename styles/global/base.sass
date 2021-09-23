@@ -1,0 +1,44 @@
+@import "../mixins/vendorprefix"
+  
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+@font-face
+  font-family: "Barlow Semi Condensed"
+  src: url(../fonts/BarlowSemiCondensed-SemiBold.ttf)  
+  font-weight: 700
+
+@font-face
+  font-family: "Barlow Semi Condensed"
+  src: url(../fonts/BarlowSemiCondensed-Bold.ttf)  
+  font-weight: 800
+
+//Actual Desktop Size
+$desktop-w: 1366px
+//Desktop size for a more natural feeling based on element sizes
+$desktop-w-natural: 600px
+$mobile-w: 375px
+
+body
+  height: 100vh
+  font-family: Barlow Semi Condensed
+  font-weight: 700
+  background: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%))
+  display: flex
+  flex-direction: column
+  justify-content: start  
+  align-content: center
+  flex-wrap: wrap
+  row-gap: 30px
+  min-height: 760px
+  @media screen and (max-width: 800px)
+    min-height: 100vh
+    height: auto
+  @media screen and (max-width: 380px)
+    row-gap: 15px
+  
+h1
+  font-weight: 800
+  +vendor-prefix('text-shadow', '1px 1px 2px rgba(0,0,0,0.5)')

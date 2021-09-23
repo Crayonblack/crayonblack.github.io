@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Craig du Toit">
+    <title>Showdown</title>
+    <!-- links -->
+    <link rel="stylesheet" href="styles/style.css">
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <script type="text/javascript" src="scripts/lib/anime.min.js"></script>
+</head>
+<body>
+    <header class="score">
+        <h1>
+            Rock<br>
+            Paper<br>
+            Scissors<br>
+            Lizard<br>
+            Spock
+        </h1>
+        <div class="score__board">
+            <div class="score__text">
+                Score
+            </div>
+            <div class="score__count" id="score">0</div>
+        </div>
+    </header>
+    <section class="arena">
+        <div class="arena__inner">
+            <div class="arena__circle arena__circle--rock" data-title="rock">
+               <div class="arena__circle__image">
+                   <img src="images/icon-rock.svg" alt="Choose to ROCK around the clock">
+                </div>
+            </div>
+            <div class="arena__circle arena__circle--paper" data-title="paper">
+               <div class="arena__circle__image">
+                   <img src="images/icon-paper.svg" alt="Choose to roll with PAPER">
+                </div>
+            </div>
+            <div class="arena__circle arena__circle--scissors" data-title="scissors">
+               <div class="arena__circle__image">
+                   <img src="images/icon-scissors.svg" alt="Choose to become a SCISSOR sister">
+                </div>
+            </div>
+            <div class="arena__circle arena__circle--lizard" data-title="lizard">
+               <div class="arena__circle__image">
+                   <img src="images/icon-lizard.svg" alt="Choose to go LIZARD like Eddie Izzard">
+                </div>
+            </div>
+            <div class="arena__circle arena__circle--spock" data-title="spock">
+               <div class="arena__circle__image">
+                   <img src="images/icon-spock.svg" alt="Choose to Live long and propser - SPOCK">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="showdown">
+        <div class="showdown__player">
+            <div class="showdown__player--selection"></div>
+        </div>
+        <div class="showdown__result">
+            <h1></h1>
+            <div class="button" onclick="window.location.reload()">Play Again</div>
+        </div>
+        <div class="showdown__computer">
+            <div class="showdown__computer--selection"></div>
+        </div>
+    </section>
+    <footer class="rules">
+        <div class="button" onclick="openRules()">Rules</div>
+    </footer>
+
+    <div id="rulesmodal" class="modal"></div>
+</body>
+</html>
