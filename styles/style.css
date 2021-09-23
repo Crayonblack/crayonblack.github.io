@@ -622,6 +622,7 @@ h1 {
       background: #f0f0f0;
       cursor: pointer;
       margin: 0px auto;
+      user-select: none;
       -webkit-border-radius: 8px;
       -moz-border-radius: 8px;
       -ms-border-radius: 8px;
@@ -651,6 +652,7 @@ h1 {
     color: #f0f0f0;
     font-size: 1.2em;
     text-transform: uppercase;
+    user-select: none;
     border: 1px solid #f0f0f0;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
