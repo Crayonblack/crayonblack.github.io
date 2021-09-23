@@ -64,8 +64,8 @@ to
 
 I also relied heavily on SASS @extend in order to not replicate the item that was selected, by extending it we inherit all the base styles of the element allowing us to keep the single instance where the style of the item is created.
 
-To see how you can add code snippets, see below:
 
+HTML
 ```html
 <div class="arena__circle arena__circle--rock" data-title="rock">
     <div class="arena__circle__image">
@@ -73,6 +73,8 @@ To see how you can add code snippets, see below:
     </div>
 </div>
 ```
+
+CSS
 ```css
 &__circle
     @extend .arena__circle
@@ -87,6 +89,8 @@ To see how you can add code snippets, see below:
             @extend .arena__circle--paper
             @extend .arena__circle--paper:hover	
 ```
+
+JS
 ```js
 function showDown(){
     let _weapons = document.querySelectorAll(".arena__circle");
@@ -114,5 +118,5 @@ But I feel now is the time for me to tackle learning Angular & Vue.
 
 ## Author
 
-- Website - Craig du Toit
+- Author - Craig du Toit
 - Instagram - [@craigdutoitza](https://www.instagram.com/craigdutoitza/)
