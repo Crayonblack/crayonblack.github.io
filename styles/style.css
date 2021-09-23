@@ -479,8 +479,9 @@ h1 {
   column-gap: 40px;
   position: relative;
   width: 800px;
-  align-items: center;
-  height: calc(100vh - 217px - 70px); }
+  align-items: flex-start;
+  height: calc(100vh - 217px - 70px);
+  padding-top: 40px; }
   @media screen and (max-width: 800px) {
     .showdown {
       width: 70vw;
