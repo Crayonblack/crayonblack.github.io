@@ -525,7 +525,8 @@ h1 {
       .showdown__player, .showdown__computer {
         height: 280px;
         width: 50vw;
-        align-self: flex-start; } }
+        align-self: center;
+        margin-top: -10%; } }
     @media screen and (max-width: 380px) {
       .showdown__player, .showdown__computer {
         height: 180px; } }
@@ -604,8 +605,8 @@ h1 {
         width: 100%;
         order: 3;
         position: absolute;
-        bottm: 0px;
-        margin-top: 0x; } }
+        bottom: 13%;
+        margin-top: 0px; } }
     .showdown__result h1 {
       color: #f0f0f0;
       font-size: 3em;
