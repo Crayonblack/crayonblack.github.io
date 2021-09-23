@@ -1,5 +1,10 @@
 .arena
-    // flex: 1 0 auto
+    display: flex
+    align-items: center
+    height: calc(100vh - 217px - 70px)
+    @media screen and (max-width: 800px)
+        height: calc(100vh - 157px - 70px)
+        
     *
         @media screen and (max-width: 800px)
             +vendor-prefix('transform', 'scale(0.8)')
@@ -9,9 +14,11 @@
         width: 329px
         height: 313px
         position: relative
-        margin: 100px auto 0px auto
+        margin: 0px auto 0px auto
         background: url(../images/bg-pentagon.svg) no-repeat center center
         @media screen and (max-width: 800px)
+            display: flex
+            align-items: center
             width: 260px      
             height: 260px 
             margin-top: 0px     

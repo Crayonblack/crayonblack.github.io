@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     showDown();
     document.getElementById("score").innerHTML = localStorage.getItem("score");
+    let _score = document.getElementById("score").innerHTML
+    if(_score == 0){
+        document.getElementById("score").innerHTML = "0";
+    }
 });
 
 function openRules() {
