@@ -114,7 +114,9 @@ But I feel now is the time for me to tackle learning Angular & Vue.
 
 ### Useful resources
 
-- (https://animejs.com/) - This helped me with using Anime.js
+- (https://developer.mozilla.org/en-US/) - Js syntax, structure and examples.
+- (https://stackoverflow.com/) - Because getting help from people smarter than you saves lives.
+- (https://animejs.com/) - This helped me with using Anime.js.
 
 ## Author
 
