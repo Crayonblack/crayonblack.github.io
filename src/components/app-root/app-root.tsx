@@ -421,7 +421,7 @@ export class AppRoot {
           </div>
         </article>
         <p id="footer" class="footer absolute text-lg mx-auto w-fit h-fit font-sans">
-          Hand built with StencilJS + GSAP + Tailwind CSS &nbsp; [ <span class="text-indigo-700" onClick={() => this.resetThisPlace()}>Restart the journey</span> ]
+          Hand built with StencilJS + GSAP + Tailwind CSS &nbsp; [ <span onClick={() => this.resetThisPlace()}>Restart the journey</span> ]
         </p>
       </section>
     );
