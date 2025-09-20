@@ -1,4 +1,4 @@
-import { r as registerInstance, h, g as getElement } from './index-9249e143.js';
+import { r as registerInstance, h, g as getElement } from './index-f10f8688.js';
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
@@ -79,7 +79,7 @@ _unitExp = /^[+\-=e\s\d]*\d+[.\d]*([a-z]*|%)\s*$/i,
     _globalTimeline,
     _win$6,
     _coreInitted$7,
-    _doc$7,
+    _doc$6,
     _globals = {},
     _installScope = {},
     _coreReady,
@@ -407,7 +407,7 @@ _postAddChecks = function _postAddChecks(timeline, child) {
     // in case, for example, the _start is moved on a tween that has already rendered, or if it's being inserted into a timeline BEFORE where the playhead is currently. Imagine it's at its end state, then the startTime is moved WAY later (after the end of this timeline), it should render at its beginning. Special case: if it's a timeline (has .add() method) and no duration, we can skip rendering because the user may be populating it AFTER adding it to a parent timeline (unconventional, but possible, and we wouldn't want it to get removed if the parent's autoRemoveChildren is true).
     t = _parentToChildTotalTime(timeline.rawTime(), child);
 
-    if (!child._dur || _clamp$2(0, child.totalDuration(), t) - child._tTime > _tinyNum) {
+    if (!child._dur || _clamp$1(0, child.totalDuration(), t) - child._tTime > _tinyNum) {
       child.render(t, true);
     }
   } //if the timeline has already ended but the inserted tween/timeline extends the duration, we should enable this timeline again so that it renders properly. We should also align the playhead with the parent timeline's when appropriate.
@@ -479,7 +479,7 @@ _isFromOrFromStart = function _isFromOrFromStart(_ref2) {
 
   if (repeatDelay && tween._repeat) {
     // in case there's a zero-duration tween that has a repeat with a repeatDelay
-    tTime = _clamp$2(0, tween._tDur, totalTime);
+    tTime = _clamp$1(0, tween._tDur, totalTime);
     iteration = _animationCycle(tTime, repeatDelay);
     tween._yoyo && iteration & 1 && (ratio = 1 - ratio);
 
@@ -639,7 +639,7 @@ _isFromOrFromStart = function _isFromOrFromStart(_ref2) {
     _conditionalReturn = function _conditionalReturn(value, func) {
   return value || value === 0 ? func(value) : func;
 },
-    _clamp$2 = function _clamp(min, max, value) {
+    _clamp$1 = function _clamp(min, max, value) {
   return value < min ? min : value > max ? max : value;
 },
     getUnit = function getUnit(value, v) {
@@ -648,7 +648,7 @@ _isFromOrFromStart = function _isFromOrFromStart(_ref2) {
     // note: protect against padded numbers as strings, like "100.100". That shouldn't return "00" as the unit. If it's numeric, return no unit.
 clamp = function clamp(min, max, value) {
   return _conditionalReturn(value, function (v) {
-    return _clamp$2(min, max, v);
+    return _clamp$1(min, max, v);
   });
 },
     _slice = [].slice,
@@ -668,13 +668,13 @@ clamp = function clamp(min, max, value) {
 },
     //takes any value and returns an array. If it's a string (and leaveStrings isn't true), it'll use document.querySelectorAll() and convert that to an array. It'll also accept iterables like jQuery objects.
 toArray = function toArray(value, scope, leaveStrings) {
-  return _context$5 && !scope && _context$5.selector ? _context$5.selector(value) : _isString$4(value) && !leaveStrings && (_coreInitted$7 || !_wake()) ? _slice.call((scope || _doc$7).querySelectorAll(value), 0) : _isArray(value) ? _flatten(value, leaveStrings) : _isArrayLike(value) ? _slice.call(value, 0) : value ? [value] : [];
+  return _context$5 && !scope && _context$5.selector ? _context$5.selector(value) : _isString$4(value) && !leaveStrings && (_coreInitted$7 || !_wake()) ? _slice.call((scope || _doc$6).querySelectorAll(value), 0) : _isArray(value) ? _flatten(value, leaveStrings) : _isArrayLike(value) ? _slice.call(value, 0) : value ? [value] : [];
 },
     selector = function selector(value) {
   value = toArray(value)[0] || _warn("Invalid scope") || {};
   return function (v) {
     var el = value.current || value.nativeElement || value;
-    return toArray(v, el.querySelectorAll ? el : el === value ? _warn("Invalid scope") || _doc$7.createElement("div") : value);
+    return toArray(v, el.querySelectorAll ? el : el === value ? _warn("Invalid scope") || _doc$6.createElement("div") : value);
   };
 },
     shuffle = function shuffle(a) {
@@ -1335,7 +1335,7 @@ _tickerActive,
       if (_coreReady) {
         if (!_coreInitted$7 && _windowExists$3()) {
           _win$6 = _coreInitted$7 = window;
-          _doc$7 = _win$6.document || {};
+          _doc$6 = _win$6.document || {};
           _globals.gsap = gsap$9;
           (_win$6.gsapVersions || (_win$6.gsapVersions = [])).push(gsap$9.version);
 
@@ -1613,7 +1613,7 @@ _easeMap.SteppedEase = _easeMap.steps = _globals.SteppedEase = {
         p3 = immediateStart ? 1 : 0,
         max = 1 - _tinyNum;
     return function (p) {
-      return ((p2 * _clamp$2(0, max, p) | 0) + p3) * p1;
+      return ((p2 * _clamp$1(0, max, p) | 0) + p3) * p1;
     };
   }
 };
@@ -1782,7 +1782,7 @@ var Animation = /*#__PURE__*/function () {
     this._rts = +value || 0;
     this._ts = this._ps || value === -_tinyNum ? 0 : this._rts; // _ts is the functional timeScale which would be 0 if the animation is paused.
 
-    this.totalTime(_clamp$2(-Math.abs(this._delay), this.totalDuration(), tTime), suppressEvents !== false);
+    this.totalTime(_clamp$1(-Math.abs(this._delay), this.totalDuration(), tTime), suppressEvents !== false);
 
     _setEnd(this); // if parent.smoothChildTiming was false, the end time didn't get updated in the _alignPlayhead() method, so do it here.
 
@@ -4484,24 +4484,6 @@ var gsap$9 = _gsap.registerPlugin({
 Tween.version = Timeline.version = gsap$9.version = "3.13.0";
 _coreReady = 1;
 _windowExists$3() && _wake();
-var Power0 = _easeMap.Power0,
-    Power1 = _easeMap.Power1,
-    Power2 = _easeMap.Power2,
-    Power3 = _easeMap.Power3,
-    Power4 = _easeMap.Power4,
-    Linear = _easeMap.Linear,
-    Quad = _easeMap.Quad,
-    Cubic = _easeMap.Cubic,
-    Quart = _easeMap.Quart,
-    Quint = _easeMap.Quint,
-    Strong = _easeMap.Strong,
-    Elastic = _easeMap.Elastic,
-    Back = _easeMap.Back,
-    SteppedEase = _easeMap.SteppedEase,
-    Bounce = _easeMap.Bounce,
-    Sine = _easeMap.Sine,
-    Expo = _easeMap.Expo,
-    Circ = _easeMap.Circ;
 
 /*!
  * CSSPlugin 3.13.0
@@ -4513,11 +4495,10 @@ var Power0 = _easeMap.Power0,
 */
 
 var _win$5,
-    _doc$6,
+    _doc$5,
     _docElement$1,
     _pluginInitted,
     _tempDiv$1,
-    _tempDivStyler,
     _recentSetterPlugin,
     _reverting$1,
     _windowExists$2 = function _windowExists() {
@@ -4525,7 +4506,7 @@ var _win$5,
 },
     _transformProps = {},
     _RAD2DEG$1 = 180 / Math.PI,
-    _DEG2RAD$3 = Math.PI / 180,
+    _DEG2RAD$2 = Math.PI / 180,
     _atan2$2 = Math.atan2,
     _bigNum$1 = 1e8,
     _capsExp$1 = /([A-Z])/g,
@@ -4688,9 +4669,9 @@ _renderRoundedCSSProp = function _renderRoundedCSSProp(ratio, data) {
 },
     _supports3D,
     _createElement$2 = function _createElement(type, ns) {
-  var e = _doc$6.createElementNS ? _doc$6.createElementNS((ns || "http://www.w3.org/1999/xhtml").replace(/^https/, "http"), type) : _doc$6.createElement(type); //some servers swap in https for http in the namespace which can break things, making "style" inaccessible.
+  var e = _doc$5.createElementNS ? _doc$5.createElementNS((ns || "http://www.w3.org/1999/xhtml").replace(/^https/, "http"), type) : _doc$5.createElement(type); //some servers swap in https for http in the namespace which can break things, making "style" inaccessible.
 
-  return e && e.style ? e : _doc$6.createElement(type); //some environments won't allow access to the element's style when created with a namespace in which case we default to the standard createElement() to work around the issue. Also note that when GSAP is embedded directly inside an SVG file, createElement() won't allow access to the style object in Firefox (see https://gsap.com/forums/topic/20215-problem-using-tweenmax-in-standalone-self-containing-svg-file-err-cannot-set-property-csstext-of-undefined/).
+  return e && e.style ? e : _doc$5.createElement(type); //some environments won't allow access to the element's style when created with a namespace in which case we default to the standard createElement() to work around the issue. Also note that when GSAP is embedded directly inside an SVG file, createElement() won't allow access to the style object in Firefox (see https://gsap.com/forums/topic/20215-problem-using-tweenmax-in-standalone-self-containing-svg-file-err-cannot-set-property-csstext-of-undefined/).
 },
     _getComputedProperty = function _getComputedProperty(target, property, skipPrefixFallback) {
   var cs = getComputedStyle(target);
@@ -4715,12 +4696,12 @@ _renderRoundedCSSProp = function _renderRoundedCSSProp(ratio, data) {
     _initCore$6 = function _initCore() {
   if (_windowExists$2() && window.document) {
     _win$5 = window;
-    _doc$6 = _win$5.document;
-    _docElement$1 = _doc$6.documentElement;
+    _doc$5 = _win$5.document;
+    _docElement$1 = _doc$5.documentElement;
     _tempDiv$1 = _createElement$2("div") || {
       style: {}
     };
-    _tempDivStyler = _createElement$2("div");
+    _createElement$2("div");
     _transformProp$2 = _checkPropPrefix(_transformProp$2);
     _transformOriginProp$1 = _transformProp$2 + "Origin";
     _tempDiv$1.style.cssText = "border-width:0;line-height:0;position:absolute;padding:0"; //make sure to override certain properties that may contaminate measurements, in case the user has overreaching style sheets.
@@ -4863,8 +4844,8 @@ _convertToUnit = function _convertToUnit(target, property, value, unit) {
     parent = (target.ownerSVGElement || {}).parentNode;
   }
 
-  if (!parent || parent === _doc$6 || !parent.appendChild) {
-    parent = _doc$6.body;
+  if (!parent || parent === _doc$5 || !parent.appendChild) {
+    parent = _doc$5.body;
   }
 
   cache = parent._gsap;
@@ -5398,7 +5379,7 @@ _identity2DMatrix = [1, 0, 0, 1, 0, 0],
       rotation = a || b ? _atan2$2(b, a) * _RAD2DEG$1 : 0; //note: if scaleX is 0, we cannot accurately measure rotation. Same for skewX with a scaleY of 0. Therefore, we default to the previously recorded value (or zero if that doesn't exist).
 
       skewX = c || d ? _atan2$2(c, d) * _RAD2DEG$1 + rotation : 0;
-      skewX && (scaleY *= Math.abs(Math.cos(skewX * _DEG2RAD$3)));
+      skewX && (scaleY *= Math.abs(Math.cos(skewX * _DEG2RAD$2)));
 
       if (cache.svg) {
         x -= xOrigin - (xOrigin * a + yOrigin * c);
@@ -5560,12 +5541,12 @@ _addPxTranslate = function _addPxTranslate(target, start, value) {
 
 
   if (zOrigin && (rotationX !== _zeroDeg || rotationY !== _zeroDeg)) {
-    var angle = parseFloat(rotationY) * _DEG2RAD$3,
+    var angle = parseFloat(rotationY) * _DEG2RAD$2,
         a13 = Math.sin(angle),
         a33 = Math.cos(angle),
         cos;
 
-    angle = parseFloat(rotationX) * _DEG2RAD$3;
+    angle = parseFloat(rotationX) * _DEG2RAD$2;
     cos = Math.cos(angle);
     x = _addPxTranslate(target, x, a13 * cos * -zOrigin);
     y = _addPxTranslate(target, y, -Math.sin(angle) * -zOrigin);
@@ -5643,15 +5624,15 @@ _addPxTranslate = function _addPxTranslate(target, start, value) {
   }
 
   if (rotation || skewX) {
-    rotation *= _DEG2RAD$3;
-    skewX *= _DEG2RAD$3;
+    rotation *= _DEG2RAD$2;
+    skewX *= _DEG2RAD$2;
     a11 = Math.cos(rotation) * scaleX;
     a21 = Math.sin(rotation) * scaleX;
     a12 = Math.sin(rotation - skewX) * -scaleY;
     a22 = Math.cos(rotation - skewX) * scaleY;
 
     if (skewX) {
-      skewY *= _DEG2RAD$3;
+      skewY *= _DEG2RAD$2;
       temp = Math.tan(skewX - skewY);
       temp = Math.sqrt(1 + temp * temp);
       a12 *= temp;
@@ -6080,9 +6061,7 @@ _forEachName("x,y,z,top,right,bottom,left,width,height,fontSize,padding,margin,p
 
 gsap$9.registerPlugin(CSSPlugin);
 
-var gsapWithCSS = gsap$9.registerPlugin(CSSPlugin) || gsap$9,
-    // to protect from tree shaking
-TweenMaxWithCSS = gsapWithCSS.core.Tween;
+var gsapWithCSS = gsap$9.registerPlugin(CSSPlugin) || gsap$9;
 
 /*!
  * paths 3.13.0
@@ -6098,7 +6077,7 @@ var _svgPathExp = /[achlmqstvz]|(-?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
     _numbersExp$1 = /(?:(-)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
     _scientific = /[\+\-]?\d*\.?\d+e[\+\-]?\d+/ig,
     _selectorExp$2 = /(^[#\.][a-z]|[a-y][a-z])/i,
-    _DEG2RAD$2 = Math.PI / 180,
+    _DEG2RAD$1 = Math.PI / 180,
     _RAD2DEG = 180 / Math.PI,
     _sin$1 = Math.sin,
     _cos$1 = Math.cos,
@@ -6371,11 +6350,6 @@ function convertToPath(element, swap) {
 
   return path;
 } //returns the rotation (in degrees) at a particular progress on a rawPath (the slope of the tangent)
-
-function getRotationAtProgress(rawPath, progress) {
-  var d = getProgressData(rawPath, progress >= 1 ? 1 - 1e-9 : progress ? progress : 1e-9);
-  return getRotationAtBezierT(d.segment, d.i, d.t);
-}
 
 function getRotationAtBezierT(segment, i, t) {
   var a = segment[i],
@@ -6825,7 +6799,7 @@ function arcToSegment(lastX, lastY, rx, ry, angle, largeArcFlag, sweepFlag, x, y
   rx = _abs$1(rx);
   ry = _abs$1(ry);
 
-  var angleRad = angle % 360 * _DEG2RAD$2,
+  var angleRad = angle % 360 * _DEG2RAD$1,
       cosAngle = _cos$1(angleRad),
       sinAngle = _sin$1(angleRad),
       PI = Math.PI,
@@ -7414,31 +7388,6 @@ function getClosestData(rawPath, x, y, slices) {
 
   return closest;
 } //subdivide a Segment closest to a specific x,y coordinate
-
-function subdivideSegmentNear(x, y, segment, slices, iterations) {
-  var l = segment.length,
-      bestDistance = _largeNum,
-      bestT = 0,
-      bestSegmentIndex = 0,
-      t,
-      i;
-  slices = slices || 20;
-  iterations = iterations || 3;
-
-  for (i = 0; i < l; i += 6) {
-    t = getClosestProgressOnBezier(1, x, y, 0, 1, slices, segment[i], segment[i + 1], segment[i + 2], segment[i + 3], segment[i + 4], segment[i + 5], segment[i + 6], segment[i + 7]);
-
-    if (bestDistance > _bestDistance) {
-      bestDistance = _bestDistance;
-      bestT = t;
-      bestSegmentIndex = i;
-    }
-  }
-
-  t = getClosestProgressOnBezier(iterations, x, y, bestT - 0.05, bestT + 0.05, slices, segment[bestSegmentIndex], segment[bestSegmentIndex + 1], segment[bestSegmentIndex + 2], segment[bestSegmentIndex + 3], segment[bestSegmentIndex + 4], segment[bestSegmentIndex + 5], segment[bestSegmentIndex + 6], segment[bestSegmentIndex + 7]);
-  subdivideSegment(segment, bestSegmentIndex, t);
-  return bestSegmentIndex + 6;
-}
 /*
 Takes any of the following and converts it to an all Cubic Bezier SVG data string:
 - A <path> data string like "M0,0 L2,4 v20,15 H100"
@@ -7606,7 +7555,7 @@ export function normalizePath(path) {
 */
 
 /* eslint-disable */
-var _doc$5,
+var _doc$4,
     _win$4,
     _docElement,
     _body$5,
@@ -7632,10 +7581,10 @@ var _doc$5,
   _identityMatrix = new Matrix2D();
 
   if (doc) {
-    _doc$5 = doc;
+    _doc$4 = doc;
     _docElement = doc.documentElement;
     _body$5 = doc.body;
-    _gEl = _doc$5.createElementNS("http://www.w3.org/2000/svg", "g"); // prevent any existing CSS from transforming it
+    _gEl = _doc$4.createElementNS("http://www.w3.org/2000/svg", "g"); // prevent any existing CSS from transforming it
 
     _gEl.style.transform = "none"; // now test for the offset reporting bug. Use feature detection instead of browser sniffing to make things more bulletproof and future-proof. Hopefully Safari will fix their bug soon.
 
@@ -7695,10 +7644,10 @@ _svgTemps = [],
     //we create 3 elements for SVG, and 3 for other DOM elements and cache them for performance reasons. They get nested in _divContainer and _svgContainer so that just one element is added to the DOM on each successive attempt. Again, performance is key.
 _divTemps = [],
     _getDocScrollTop = function _getDocScrollTop() {
-  return _win$4.pageYOffset || _doc$5.scrollTop || _docElement.scrollTop || _body$5.scrollTop || 0;
+  return _win$4.pageYOffset || _doc$4.scrollTop || _docElement.scrollTop || _body$5.scrollTop || 0;
 },
     _getDocScrollLeft = function _getDocScrollLeft() {
-  return _win$4.pageXOffset || _doc$5.scrollLeft || _docElement.scrollLeft || _body$5.scrollLeft || 0;
+  return _win$4.pageXOffset || _doc$4.scrollLeft || _docElement.scrollLeft || _body$5.scrollLeft || 0;
 },
     _svgOwner = function _svgOwner(element) {
   return element.ownerSVGElement || ((element.tagName + "").toLowerCase() === "svg" ? element : null);
@@ -7716,14 +7665,14 @@ _divTemps = [],
   }
 },
     _createSibling = function _createSibling(element, i) {
-  if (element.parentNode && (_doc$5 || _setDoc(element))) {
+  if (element.parentNode && (_doc$4 || _setDoc(element))) {
     var svg = _svgOwner(element),
         ns = svg ? svg.getAttribute("xmlns") || "http://www.w3.org/2000/svg" : "http://www.w3.org/1999/xhtml",
         type = svg ? i ? "rect" : "g" : "div",
         x = i !== 2 ? 0 : 100,
         y = i === 3 ? 100 : 0,
         css = "position:absolute;display:block;pointer-events:none;margin:0;padding:0;",
-        e = _doc$5.createElementNS ? _doc$5.createElementNS(ns.replace(/^https/, "http"), type) : _doc$5.createElement(type);
+        e = _doc$4.createElementNS ? _doc$4.createElementNS(ns.replace(/^https/, "http"), type) : _doc$4.createElement(type);
 
     if (i) {
       if (!svg) {
@@ -7981,7 +7930,7 @@ var Matrix2D = /*#__PURE__*/function () {
 
 function getGlobalMatrix(element, inverse, adjustGOffset, includeScrollInFixed) {
   // adjustGOffset is typically used only when grabbing an element's PARENT's global matrix, and it ignores the x/y offset of any SVG <g> elements because they behave in a special way.
-  if (!element || !element.parentNode || (_doc$5 || _setDoc(element)).documentElement === element) {
+  if (!element || !element.parentNode || (_doc$4 || _setDoc(element)).documentElement === element) {
     return new Matrix2D();
   }
 
@@ -8026,7 +7975,7 @@ function getGlobalMatrix(element, inverse, adjustGOffset, includeScrollInFixed) 
 */
 
 var _numbersExp = /(?:(-)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
-    _doc$4,
+    _doc$3,
     _supportsPointer,
     _win$3,
     _body$4,
@@ -8034,7 +7983,6 @@ var _numbersExp = /(?:(-)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
     _context$4,
     _selectionColor = "#4e7fff",
     _minimumMovement = 1,
-    _DEG2RAD$1 = Math.PI / 180,
     _getTime$2 = Date.now || function () {
   return new Date().getTime();
 },
@@ -8070,10 +8018,10 @@ _comma = ",",
   }
 },
     _createElement$1 = function _createElement(type) {
-  return _doc$4.createElementNS ? _doc$4.createElementNS("http://www.w3.org/1999/xhtml", type) : _doc$4.createElement(type);
+  return _doc$3.createElementNS ? _doc$3.createElementNS("http://www.w3.org/1999/xhtml", type) : _doc$3.createElement(type);
 },
     _createSVG = function _createSVG(type, container, attributes) {
-  var element = _doc$4.createElementNS("http://www.w3.org/2000/svg", type),
+  var element = _doc$3.createElementNS("http://www.w3.org/2000/svg", type),
       reg = /([a-z])([A-Z])/g,
       p;
 
@@ -8228,9 +8176,9 @@ _comma = ",",
 },
     _coreInitted$6,
     _initCore$5 = function _initCore(core) {
-  _doc$4 = document;
+  _doc$3 = document;
   _win$3 = window;
-  _body$4 = _doc$4.body;
+  _body$4 = _doc$3.body;
   gsap$8 = gsap$8 || core || _win$3.gsap || console.warn("Please gsap.registerPlugin(PathEditor)");
 
   _context$4 = gsap$8 && gsap$8.core.context || function () {};
@@ -8260,7 +8208,7 @@ _comma = ",",
     return e.getScreenCTM().inverse().multiply(this.getScreenCTM());
   };
 
-  _doc$4.addEventListener("keydown", function (e) {
+  _doc$3.addEventListener("keydown", function (e) {
     var key = e.keyCode || e.which,
         keyString = e.key || key,
         i,
@@ -8325,7 +8273,7 @@ _comma = ",",
     }
   }, true);
 
-  _doc$4.addEventListener("keyup", function (e) {
+  _doc$3.addEventListener("keyup", function (e) {
     var key = e.key || e.keyCode || e.which;
 
     if (key === "Shift" || key === 16) {
@@ -8346,11 +8294,11 @@ _comma = ",",
 
   _supportsPointer = !!_win$3.PointerEvent;
 
-  _addListener$2(_doc$4, "mouseup", _checkDeselect);
+  _addListener$2(_doc$3, "mouseup", _checkDeselect);
 
-  _addListener$2(_doc$4, "touchend", _checkDeselect);
+  _addListener$2(_doc$3, "touchend", _checkDeselect);
 
-  _addListener$2(_doc$4, "touchcancel", _emptyFunc$1); //some older Android devices intermittently stop dispatching "touchmove" events if we don't listen for "touchcancel" on the document. Very strange indeed.
+  _addListener$2(_doc$3, "touchcancel", _emptyFunc$1); //some older Android devices intermittently stop dispatching "touchmove" events if we don't listen for "touchcancel" on the document. Very strange indeed.
 
 
   _addListener$2(_win$3, "touchmove", _emptyFunc$1); //works around Safari bugs that still allow the page to scroll even when we preventDefault() on the touchmove event.
@@ -8371,7 +8319,7 @@ _comma = ",",
 
   if (_touchEventLookup[e.type]) {
     //note: on iOS, BOTH touchmove and mousemove are dispatched, but the mousemove has pageY and pageX of 0 which would mess up the calculations and needlessly hurt performance.
-    touchEventTarget = e.type.indexOf("touch") !== -1 ? e.currentTarget || e.target : _doc$4; //pointer-based touches (for Microsoft browsers) don't remain locked to the original target like other browsers, so we must use the document instead. The event type would be "MSPointerDown" or "pointerdown".
+    touchEventTarget = e.type.indexOf("touch") !== -1 ? e.currentTarget || e.target : _doc$3; //pointer-based touches (for Microsoft browsers) don't remain locked to the original target like other browsers, so we must use the document instead. The event type would be "MSPointerDown" or "pointerdown".
 
     _addListener$2(touchEventTarget, "touchend", self._onRelease);
 
@@ -8379,19 +8327,19 @@ _comma = ",",
 
     _addListener$2(touchEventTarget, "touchcancel", self._onRelease);
 
-    _addListener$2(_doc$4, "touchstart", _onMultiTouchDocument);
+    _addListener$2(_doc$3, "touchstart", _onMultiTouchDocument);
 
     _addListener$2(_win$3, "touchforcechange", _preventDefault); //otherwise iOS will scroll when dragging.
 
   } else {
     touchEventTarget = null;
 
-    _addListener$2(_doc$4, "mousemove", self._onMove); //attach these to the document instead of the box itself so that if the user's mouse moves too quickly (and off of the box), things still work.
+    _addListener$2(_doc$3, "mousemove", self._onMove); //attach these to the document instead of the box itself so that if the user's mouse moves too quickly (and off of the box), things still work.
 
   }
 
   if (!_supportsPointer) {
-    _addListener$2(_doc$4, "mouseup", self._onRelease);
+    _addListener$2(_doc$3, "mouseup", self._onRelease);
   }
 
   _preventDefault(e);
@@ -8495,13 +8443,13 @@ _comma = ",",
 
     _removeListener$2(touchEventTarget, "touchcancel", self._onRelease);
 
-    _removeListener$2(_doc$4, "touchstart", _onMultiTouchDocument);
+    _removeListener$2(_doc$3, "touchstart", _onMultiTouchDocument);
   } else {
-    _removeListener$2(_doc$4, "mousemove", self._onMove);
+    _removeListener$2(_doc$3, "mousemove", self._onMove);
   }
 
   if (!_supportsPointer) {
-    _removeListener$2(_doc$4, "mouseup", self._onRelease);
+    _removeListener$2(_doc$3, "mouseup", self._onRelease);
 
     if (e && e.target) {
       _removeListener$2(e.target, "mouseup", self._onRelease);
@@ -8578,7 +8526,7 @@ _comma = ",",
 
 var DraggableSVG = /*#__PURE__*/function () {
   function DraggableSVG(target, vars) {
-    this.target = typeof target === "string" ? _doc$4.querySelectorAll(target)[0] : target;
+    this.target = typeof target === "string" ? _doc$3.querySelectorAll(target)[0] : target;
     this.vars = vars || {};
     this._onPress = _bind(_onPress, this);
     this._onMove = _bind(_onMove, this);
@@ -8688,9 +8636,9 @@ var DraggableSVG = /*#__PURE__*/function () {
         _removeListener$2(this.touchEventTarget, "touchmove", this._onMove);
       }
 
-      _removeListener$2(_doc$4, "mouseup", this._onRelease);
+      _removeListener$2(_doc$3, "mouseup", this._onRelease);
 
-      _removeListener$2(_doc$4, "mousemove", this._onMove);
+      _removeListener$2(_doc$3, "mousemove", this._onMove);
 
       this.isDragging = this.isPressed = false;
 
@@ -8789,7 +8737,7 @@ var PathEditor = /*#__PURE__*/function () {
     vars = vars || {};
     _coreInitted$6 || _initCore$5();
     this.vars = vars;
-    this.path = typeof target === "string" ? _doc$4.querySelectorAll(target)[0] : target;
+    this.path = typeof target === "string" ? _doc$3.querySelectorAll(target)[0] : target;
     this._g = _createSVG("g", this.path.ownerSVGElement, {
       "class": "path-editor-g path-editor"
     });
@@ -9706,11 +9654,10 @@ PathEditor.pointsToSegment = pointsToSegment;
 
 PathEditor.simplifySVG = function (data, vars) {
   //takes a <path> element or data string and simplifies it according to whatever tolerance you set (default:1, the bigger the number the more variance there can be). vars: {tolerance:1, cornerThreshold:degrees, curved:true}
-  var element, points, i, x1, x2, y1, y2, bezier, precision, tolerance, l, cornerThreshold;
+  var element, points, i, x1, x2, y1, y2, bezier, precision, tolerance, l;
   vars = vars || {};
   tolerance = vars.tolerance || 1;
   precision = vars.precision || 1 / tolerance;
-  cornerThreshold = (vars.cornerThreshold === undefined ? 18 : +vars.cornerThreshold) * _DEG2RAD$1;
 
   if (typeof data !== "string") {
     //element
@@ -9720,7 +9667,7 @@ PathEditor.simplifySVG = function (data, vars) {
 
   if (data.charAt(0) === "#" || data.charAt(0) === ".") {
     //selector text
-    element = _doc$4.querySelector(data);
+    element = _doc$3.querySelector(data);
 
     if (element) {
       data = element.getAttribute("d");
@@ -9743,7 +9690,7 @@ PathEditor.simplifySVG = function (data, vars) {
       bezierToPoints(x1, y1, +bezier[i], +bezier[i + 1], +bezier[i + 2], +bezier[i + 3], x2, y2, 1 / (precision * 200000), points, points.length - 2);
     }
 
-    points = pointsToSegment(simplifyPoints(points, tolerance), vars.curviness, cornerThreshold);
+    points = pointsToSegment(simplifyPoints(points, tolerance), vars.curviness);
     points[2] = "C" + points[2];
   } else {
     points = simplifyPoints(points, tolerance);
@@ -9843,23 +9790,22 @@ PathEditor.register = _initCore$5;
 
 var gsap$7,
     _win$2,
-    _doc$3,
+    _doc$2,
     _docEl$3,
     _body$3,
     MotionPathPlugin$1,
     _arrayToRawPath,
     _rawPathToString,
     _context$3,
-    _bonusValidated$2 = 1,
     //<name>MotionPathHelper</name>
 _selectorExp$1 = /(^[#\.][a-z]|[a-y][a-z])/i,
     _isString$2 = function _isString(value) {
   return typeof value === "string";
 },
     _createElement = function _createElement(type, ns) {
-  var e = _doc$3.createElementNS ? _doc$3.createElementNS((ns || "http://www.w3.org/1999/xhtml").replace(/^https/, "http"), type) : _doc$3.createElement(type); //some servers swap in https for http in the namespace which can break things, making "style" inaccessible.
+  var e = _doc$2.createElementNS ? _doc$2.createElementNS((ns || "http://www.w3.org/1999/xhtml").replace(/^https/, "http"), type) : _doc$2.createElement(type); //some servers swap in https for http in the namespace which can break things, making "style" inaccessible.
 
-  return e.style ? e : _doc$3.createElement(type); //some environments won't allow access to the element's style when created with a namespace in which case we default to the standard createElement() to work around the issue. Also note that when GSAP is embedded directly inside an SVG file, createElement() won't allow access to the style object in Firefox (see https://gsap.com/forums/topic/20215-problem-using-tweenmax-in-standalone-self-containing-svg-file-err-cannot-set-property-csstext-of-undefined/).
+  return e.style ? e : _doc$2.createElement(type); //some environments won't allow access to the element's style when created with a namespace in which case we default to the standard createElement() to work around the issue. Also note that when GSAP is embedded directly inside an SVG file, createElement() won't allow access to the style object in Firefox (see https://gsap.com/forums/topic/20215-problem-using-tweenmax-in-standalone-self-containing-svg-file-err-cannot-set-property-csstext-of-undefined/).
 },
     _getPositionOnPage = function _getPositionOnPage(target) {
   var bounds = target.getBoundingClientRect(),
@@ -9901,7 +9847,7 @@ _selectorExp$1 = /(^[#\.][a-z]|[a-y][a-z])/i,
   _body$3.appendChild(_copyElement);
 },
     _parsePath = function _parsePath(path, target, vars) {
-  return _isString$2(path) && _selectorExp$1.test(path) ? _doc$3.querySelector(path) : Array.isArray(path) ? _rawPathToString(_arrayToRawPath([{
+  return _isString$2(path) && _selectorExp$1.test(path) ? _doc$2.querySelector(path) : Array.isArray(path) ? _rawPathToString(_arrayToRawPath([{
     x: gsap$7.getProperty(target, "x"),
     y: gsap$7.getProperty(target, "y")
   }].concat(path), vars)) : _isString$2(path) || path && (path.tagName + "").toLowerCase() === "path" ? path : 0;
@@ -9919,7 +9865,7 @@ _selectorExp$1 = /(^[#\.][a-z]|[a-y][a-z])/i,
         _copyElement.select();
 
         try {
-          _doc$3.execCommand('copy');
+          _doc$2.execCommand('copy');
 
           _copyElement.blur();
 
@@ -9963,9 +9909,9 @@ _selectorExp$1 = /(^[#\.][a-z]|[a-y][a-z])/i,
   _win$2 = window;
   gsap$7 = gsap$7 || core || _win$2.gsap || console.warn(message);
   gsap$7 && PathEditor.register(gsap$7);
-  _doc$3 = document;
-  _body$3 = _doc$3.body;
-  _docEl$3 = _doc$3.documentElement;
+  _doc$2 = document;
+  _body$3 = _doc$2.body;
+  _docEl$3 = _doc$2.documentElement;
 
   if (gsap$7) {
     MotionPathPlugin$1 = gsap$7.plugins.motionPath;
@@ -10230,11 +10176,10 @@ var _xProps = "x,translateX,left,marginLeft,xPercent".split(","),
   //mode: 0 = x but don't fill y yet, 1 = y, 2 = x and fill y with 0.
   var l = values.length,
       si = mode === 2 ? 0 : mode,
-      i = 0,
-      v;
+      i = 0;
 
   for (; i < l; i++) {
-    segment[si] = v = parseFloat(values[i][property]);
+    segment[si] = parseFloat(values[i][property]);
     mode === 2 && (segment[si + 1] = 0);
     si += 2;
   }
@@ -10582,7 +10527,6 @@ _getGSAP$5() && gsap$6.registerPlugin(MotionPathPlugin);
 var gsap$5,
     _toArray$3,
     _lastLinkedAnchor,
-    _doc$2,
     _coreInitted$5,
     PluginClass,
     _getGSAP$4 = function _getGSAP() {
@@ -11309,7 +11253,6 @@ _populateSmoothData = function _populateSmoothData(rawPath, tolerance) {
 
   if (gsap$5 && PluginClass) {
     _toArray$3 = gsap$5.utils.toArray;
-    _doc$2 = document;
     PluginClass.prototype._tweenRotation = _tweenRotation;
     _coreInitted$5 = 1;
   } else if (required) {
@@ -11669,39 +11612,6 @@ function getText(e) {
 
   return result;
 }
-function splitInnerHTML(element, delimiter, trim, preserveSpaces, unescapedCharCodes) {
-  var node = element.firstChild,
-      result = [],
-      s;
-
-  while (node) {
-    if (node.nodeType === 3) {
-      s = (node.nodeValue + "").replace(/^\n+/g, "");
-
-      if (!preserveSpaces) {
-        s = s.replace(/\s+/g, " ");
-      }
-
-      result.push.apply(result, emojiSafeSplit(s, delimiter, trim, preserveSpaces, unescapedCharCodes));
-    } else if ((node.nodeName + "").toLowerCase() === "br") {
-      result[result.length - 1] += "<br>";
-    } else {
-      result.push(node.outerHTML);
-    }
-
-    node = node.nextSibling;
-  }
-
-  if (!unescapedCharCodes) {
-    s = result.length;
-
-    while (s--) {
-      result[s] === "&" && result.splice(s, 1, "&amp;");
-    }
-  }
-
-  return result;
-}
 /*
 //smaller kb version that only handles the simpler emoji's, which is often perfectly adequate.
 
@@ -12012,7 +11922,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /* eslint-disable */
 var gsap$3,
     _coreInitted$3,
-    _clamp$1,
     _win$1,
     _doc$1,
     _docEl$2,
@@ -12218,7 +12127,6 @@ var gsap$3,
     _docEl$2 = _doc$1.documentElement;
     _body$2 = _doc$1.body;
     _root$1 = [_win$1, _doc$1, _docEl$2, _body$2];
-    _clamp$1 = gsap$3.utils.clamp;
 
     _context$2 = gsap$3.core.context || function () {};
 
@@ -15200,7 +15108,7 @@ _inputObserver = function _inputObserver(target, type, inputs, nested) {
   }); // to ensure there's a cache (element._gsap)
 
   vars.ignoreCheck = function (e) {
-    return _fixIOSBug && e.type === "touchmove" && ignoreDrag(e) || scale > 1.05 && e.type !== "touchstart" || self.isGesturing || e.touches && e.touches.length > 1;
+    return _fixIOSBug && e.type === "touchmove" && ignoreDrag() || scale > 1.05 && e.type !== "touchstart" || self.isGesturing || e.touches && e.touches.length > 1;
   };
 
   vars.onPress = function () {
@@ -15982,6 +15890,7 @@ _SplitText.version = "3.13.0";
 let SplitText = _SplitText;
 
 const appRootCss = "@layer base{*,::backdrop,:after,:before{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-border-style:solid;--tw-gradient-from:#0000;--tw-gradient-via:#0000;--tw-gradient-to:#0000;--tw-gradient-from-position:0%;--tw-gradient-via-position:50%;--tw-gradient-to-position:100%;--tw-shadow:0 0 #0000;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-alpha:100%;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-offset-width:0;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-drop-shadow-alpha:100%;--tw-scale-x:1;--tw-scale-y:1;--tw-scale-z:1;border:0 solid;box-sizing:border-box;margin:0;padding:0}}/*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,::backdrop,:after,:before{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-border-style:solid;--tw-gradient-position:initial;--tw-gradient-from:#0000;--tw-gradient-via:#0000;--tw-gradient-to:#0000;--tw-gradient-stops:initial;--tw-gradient-via-stops:initial;--tw-gradient-from-position:0%;--tw-gradient-via-position:50%;--tw-gradient-to-position:100%;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000}}}@layer theme{:host,:root{--font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace;--color-indigo-50:oklch(96.2% .018 272.314);--color-indigo-700:oklch(45.7% .24 277.023);--color-zinc-950:oklch(14.1% .005 285.823);--spacing:.25rem;--text-lg:1.125rem;--text-lg--line-height:1.55556;--radius-sm:.25rem;--radius-lg:.5rem;--drop-shadow-lg:0 4px 4px #00000026;--default-font-family:\"Montserrat\",var(--default-font);--default-mono-font-family:var(--font-mono);--default-font:ui-sans-serif,system-ui,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}}@layer base{::file-selector-button{appearance:button;background-color:#0000;border:0 solid;border-radius:0;box-sizing:border-box;color:inherit;font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;margin:0;margin-inline-end:4px;opacity:1;padding:0}:host,html{-webkit-text-size-adjust:100%;font-family:var(--default-font-family,ui-sans-serif,system-ui,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\");font-feature-settings:var(--default-font-feature-settings,normal);font-variation-settings:var(--default-font-variation-settings,normal);tab-size:4;-webkit-tap-highlight-color:transparent;line-height:1.5}hr{border-top-width:1px;color:inherit;height:0}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:var(--default-mono-font-family,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace);font-feature-settings:var(--default-mono-font-feature-settings,normal);font-size:1em;font-variation-settings:var(--default-mono-font-variation-settings,normal)}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{border-collapse:collapse;border-color:inherit;text-indent:0}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}menu,ol,ul{list-style:none}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{height:auto;max-width:100%}button,input,optgroup,select,textarea{background-color:#0000;border-radius:0;color:inherit;font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;opacity:1}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab,red,red)){::placeholder{color:currentColor;color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;min-height:1.5em;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit,::-webkit-datetime-edit-year-field{padding-block:0;padding-bottom:0;padding-top:0}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-month-field{padding-block:0;padding-bottom:0;padding-top:0}::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute-field{padding-block:0;padding-bottom:0;padding-top:0}::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-second-field{padding-block:0;padding-bottom:0;padding-top:0}::-webkit-datetime-edit-meridiem-field{padding-block:0;padding-bottom:0;padding-top:0}::-webkit-calendar-picker-indicator{line-height:1}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){appearance:button}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}[multiple],[type=date],[type=datetime-local],[type=email],[type=month],[type=number],[type=password],[type=search],[type=tel],[type=text],[type=time],[type=url],[type=week],input:where(:not([type])),select,textarea{appearance:none;--tw-shadow:0 0 #0000;background-color:#fff;border-color:oklch(55.1% .027 264.364);border-radius:0;border-width:1px;font-size:1rem;line-height:1.5rem;padding:.5rem .75rem}:is([type=text],input:where(:not([type])),[type=email],[type=url],[type=password],[type=number],[type=date],[type=datetime-local],[type=month],[type=search],[type=tel],[type=time],[type=week],[multiple],textarea,select):focus{outline-offset:2px;--tw-ring-inset:var(--tw-empty, );--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:oklch(54.6% .245 262.881);--tw-ring-offset-shadow:var(--tw-ring-inset)0 0 0 var(--tw-ring-offset-width)var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset)0 0 0 calc(1px + var(--tw-ring-offset-width))var(--tw-ring-color);border-color:oklch(54.6% .245 262.881);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow);outline:2px solid #0000}input::placeholder,textarea::placeholder{color:oklch(55.1% .027 264.364);opacity:1}::-webkit-datetime-edit-fields-wrapper{padding:0}select{background-image:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='oklch(55.1%25 0.027 264.364)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E\");background-position:right .5rem center;background-repeat:no-repeat;background-size:1.5em 1.5em;padding-right:2.5rem;print-color-adjust:exact}[multiple],[size]:where(select:not([size=\"1\"])){background-image:none;background-position:0 0;background-repeat:unset;background-size:initial;padding-right:.75rem;print-color-adjust:unset}[type=checkbox],[type=radio]{appearance:none;color:oklch(54.6% .245 262.881);print-color-adjust:exact;-webkit-user-select:none;user-select:none;vertical-align:middle;--tw-shadow:0 0 #0000;background-color:#fff;background-origin:border-box;border-color:oklch(55.1% .027 264.364);border-width:1px;display:inline-block;flex-shrink:0;height:1rem;padding:0;width:1rem}[type=checkbox]{border-radius:0}[type=radio]{border-radius:100%}[type=checkbox]:focus,[type=radio]:focus{outline-offset:2px;--tw-ring-inset:var(--tw-empty, );--tw-ring-offset-width:2px;--tw-ring-offset-color:#fff;--tw-ring-color:oklch(54.6% .245 262.881);--tw-ring-offset-shadow:var(--tw-ring-inset)0 0 0 var(--tw-ring-offset-width)var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset)0 0 0 calc(2px + var(--tw-ring-offset-width))var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow);outline:2px solid #0000}[type=checkbox]:checked,[type=radio]:checked{background-color:currentColor;background-position:50%;background-repeat:no-repeat;background-size:100% 100%;border-color:#0000}[type=checkbox]:checked{background-image:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 16 16'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0'/%3E%3C/svg%3E\")}[type=radio]:checked{background-image:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='3'/%3E%3C/svg%3E\")}[type=checkbox]:checked:focus,[type=checkbox]:checked:hover,[type=radio]:checked:focus,[type=radio]:checked:hover{background-color:currentColor;border-color:#0000}[type=checkbox]:indeterminate{background-color:currentColor;background-image:url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3E%3C/svg%3E\");background-position:50%;background-repeat:no-repeat;background-size:100% 100%;border-color:#0000}[type=checkbox]:indeterminate:focus,[type=checkbox]:indeterminate:hover{background-color:currentColor;border-color:#0000}[type=file]{background:unset;border-color:inherit;border-radius:0;border-width:0;font-size:unset;line-height:inherit;padding:0}[type=file]:focus{outline:1px solid buttontext;outline:1px auto -webkit-focus-ring-color}}@layer components;@layer utilities{.absolute{position:absolute}.relative{position:relative}.-left-\\[278px\\]{left:-278px}.z-0{z-index:0}.z-10{z-index:10}.m-auto{margin:auto}.mx-auto{margin-inline:auto}.mt-4{margin-top:calc(var(--spacing)*4)}.mt-8{margin-top:calc(var(--spacing)*8)}.mb-3{margin-bottom:calc(var(--spacing)*3)}.flex{display:flex}.h-\\[458px\\]{height:458px}.h-fit{height:fit-content}.h-full{height:100%}.h-screen{height:100vh}.w-fit{width:fit-content}.w-full{width:100%}.w-screen{width:100vw}.-translate-\\[120\\%\\]{--tw-translate-x:-120%;--tw-translate-y:-120%}.-translate-\\[120\\%\\],.-translate-y-28{translate:var(--tw-translate-x)var(--tw-translate-y)}.-translate-y-28{--tw-translate-y:calc(var(--spacing)*-28)}.translate-y-100{--tw-translate-y:calc(var(--spacing)*100);translate:var(--tw-translate-x)var(--tw-translate-y)}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.items-end{align-items:flex-end}.justify-between{justify-content:space-between}.gap-1{gap:calc(var(--spacing)*1)}.gap-2{gap:calc(var(--spacing)*2)}.gap-4{gap:calc(var(--spacing)*4)}.gap-6{gap:calc(var(--spacing)*6)}.gap-\\[2\\%\\]{gap:2%}.overflow-hidden{overflow:hidden}.border{border-style:var(--tw-border-style);border-width:1px}.bg-gradient-to-r{--tw-gradient-position:to right in oklab;background-image:linear-gradient(var(--tw-gradient-stops))}.from-indigo-700{--tw-gradient-from:var(--color-indigo-700);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.via-transparent{--tw-gradient-via:transparent;--tw-gradient-via-stops:var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-via)var(--tw-gradient-via-position),var(--tw-gradient-to)var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-via-stops)}.via-40\\%{--tw-gradient-via-position:40%}.to-transparent{--tw-gradient-to:transparent;--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.font-sans{font-family:\"Montserrat\",var(--default-font)}.text-lg{font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height))}.text-indigo-700{color:var(--color-indigo-700)}.opacity-0{opacity:0}.shadow{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a),0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}}/*! tailwindcss v4.1.13 | MIT License | https://tailwindcss.com */@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,::backdrop,:after,:before{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-border-style:solid;--tw-gradient-position:initial;--tw-gradient-from:#0000;--tw-gradient-via:#0000;--tw-gradient-to:#0000;--tw-gradient-stops:initial;--tw-gradient-via-stops:initial;--tw-gradient-from-position:0%;--tw-gradient-via-position:50%;--tw-gradient-to-position:100%;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-blur:initial;--tw-brightness:initial;--tw-contrast:initial;--tw-grayscale:initial;--tw-hue-rotate:initial;--tw-invert:initial;--tw-opacity:initial;--tw-saturate:initial;--tw-sepia:initial;--tw-drop-shadow:initial;--tw-drop-shadow-color:initial;--tw-drop-shadow-alpha:100%;--tw-drop-shadow-size:initial;--tw-scale-x:1;--tw-scale-y:1;--tw-scale-z:1}}}@layer base{}@layer components;@layer utilities{.-translate-\\[120\\%\\],.-translate-y-28{translate:var(--tw-translate-x)var(--tw-translate-y)}}body *{font-family:\"Montserrat\",var(--default-font)}.wrapper{height:100vh}h1,h2,h3,h4,h5,h6{font-family:\"Dongle\",var(--default-font)}h1{font-size:48px}h2{font-size:44px}h3{font-size:40px;line-height:28px}h4{font-size:36px;line-height:26px}h5{color:#444;font-size:32px;line-height:24px}h6{color:#666;font-size:28px;line-height:20px}.concentric div{border-radius:50%;box-shadow:10px 10px 20px #4b4b4b99,-10px -10px 20px #414141;inset:calc(var(--spacing)*0);margin:auto;position:absolute}.concentric div:first-child{-webkit-backdrop-filter:blur(25px);background:#4b4b4b33;height:600px;width:600px;z-index:9}.concentric div:nth-child(2){-webkit-backdrop-filter:blur(25px);background:#4b4b4b33;height:1000px;width:1000px;z-index:8}.concentric div:nth-child(3){-webkit-backdrop-filter:blur(25px);background:#4b4b4b33;height:1500px;width:1500px;z-index:7}.concentric div:nth-child(4){-webkit-backdrop-filter:blur(25px);background:#4b4b4b33;height:2100px;width:2100px;z-index:6}.intro-actions{height:fit-content;inset:calc(var(--spacing)*0);width:fit-content}.intro-actions .intro-text{color:#ececec;font-family:\"Montserrat\",var(--default-font);font-size:24px;line-height:48px;text-align:center}.intro-actions .look svg{transition:all .3s}.intro-actions .look svg:hover{--tw-drop-shadow-size:drop-shadow(0 4px 4px var(--tw-drop-shadow-color,#00000026));--tw-drop-shadow:var(--tw-drop-shadow-size);filter:var(--tw-blur,)var(--tw-brightness,)var(--tw-contrast,)var(--tw-grayscale,)var(--tw-hue-rotate,)var(--tw-invert,)var(--tw-saturate,)var(--tw-sepia,)var(--tw-drop-shadow,);--tw-drop-shadow-color:oklch(14.1% .005 285.823);cursor:pointer;transform:scale(1.2)}@supports (color:color-mix(in lab,red,red)){.intro-actions .look svg:hover{--tw-drop-shadow-color:oklch(14.1% .005 285.823);--tw-drop-shadow-color:color-mix(in oklab,var(--color-zinc-950)var(--tw-drop-shadow-alpha),transparent)}}.footer{bottom:10px;color:#ececec;left:0;right:0}.footer span{transition:all .3s}.footer span:hover{cursor:pointer}.cvbg{background-color:#ced2d6;background-position:100% 100%;background-repeat:no-repeat;padding:0 40px 70px}.about{border:1px solid #9e9e9e;font-size:18px;height:666px;opacity:0;overflow:hidden;padding:20px;width:30%}.about p{margin-bottom:16px;opacity:0;transform:translate(-120%)}.skills{border:1px solid #9e9e9e;font-size:18px;height:666px;opacity:0;overflow:hidden;padding:20px;width:68%}.skills h1{font-family:\"Dongle\",var(--default-font);font-size:38px;text-transform:uppercase}.socials svg{transition:all .3s}.socials svg:hover{box-shadow:5px 5px 15px #888,-5px -5px 15px #fff;cursor:pointer}#future,#future p,#history{transform:translateY(800px)}#future p{margin-bottom:16px;opacity:0}#biography1,#biography2,#biography3,#biography4{transform:translate(-120%)}#history .divider{border-radius:var(--radius-lg);height:3px;width:100%}#history .description p{margin-bottom:16px;opacity:0;transform:translateY(800px)}#history .requirements p{--tw-scale-x:0%;--tw-scale-y:0%;--tw-scale-z:0%;background:#4630db;border-radius:var(--radius-sm);color:var(--color-indigo-50);font-size:16px;padding-block:calc(var(--spacing)*1);padding-inline:calc(var(--spacing)*2);scale:var(--tw-scale-x)var(--tw-scale-y);transform-origin:50%}#stack .tab-item{border-bottom:1px solid #bfbfbf;padding-bottom:16px;transform:translateY(1000px)}#stack .tab-item:last-child{border-bottom:0 solid #0000}#stack .tab-item span{color:var(--color-indigo-700);font-family:\"Dongle\",var(--default-font);font-size:24px;line-height:16px;text-align:right}#stack .tab-item .item-title{min-width:120px;text-align:right}#stack .progress-bar{background:#bfbfbf;border-radius:100vh;cursor:pointer;height:8px;overflow:hidden;width:min(100svw - 20px,100%)}#stack .progress-bar .progress{border-radius:inherit;height:100%;transform:scaleX(0);transform-origin:0;width:100%}#stack .progress-bar.knowledge .progress{background:linear-gradient(90deg,#4630db,#a200ff)}#stack .progress-bar.love .progress{background:linear-gradient(90deg,#df5000,#a50000)}.tabbed{overflow-x:hidden;padding-bottom:16px}.tabbed [type=radio]{display:none}.tabs{align-items:stretch;display:flex;gap:10px;list-style:none;padding:0}.tab>label{border-radius:25px;color:#4630db;display:block;padding-block:calc(var(--spacing)*2);padding-inline:calc(var(--spacing)*4);transition:all .3s}.tab:hover label{background:linear-gradient(145deg,#4630db,#a200ff);box-shadow:10px 10px 30px #888,-10px -10px 30px #fff;color:#fff;cursor:pointer;transform:scale(1.1)}.tab-content{color:#141414;display:none;padding-top:20px}.tabbed [type=radio]:first-of-type:checked~.tabs .tab:first-of-type label,.tabbed [type=radio]:nth-of-type(2):checked~.tabs .tab:nth-of-type(2) label,.tabbed [type=radio]:nth-of-type(3):checked~.tabs .tab:nth-of-type(3) label{background:linear-gradient(145deg,#4630db,#a200ff);color:#fff}.tabbed [type=radio]:first-of-type:checked~.tab-content:first-of-type,.tabbed [type=radio]:nth-of-type(2):checked~.tab-content:nth-of-type(2),.tabbed [type=radio]:nth-of-type(3):checked~.tab-content:nth-of-type(3){display:flex}@property --tw-blur{syntax:\"*\";inherits:false}@property --tw-brightness{syntax:\"*\";inherits:false}@property --tw-contrast{syntax:\"*\";inherits:false}@property --tw-grayscale{syntax:\"*\";inherits:false}@property --tw-hue-rotate{syntax:\"*\";inherits:false}@property --tw-invert{syntax:\"*\";inherits:false}@property --tw-opacity{syntax:\"*\";inherits:false}@property --tw-saturate{syntax:\"*\";inherits:false}@property --tw-sepia{syntax:\"*\";inherits:false}@property --tw-drop-shadow{syntax:\"*\";inherits:false}@property --tw-drop-shadow-color{syntax:\"*\";inherits:false}@property --tw-drop-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-drop-shadow-size{syntax:\"*\";inherits:false}@property --tw-scale-x{syntax:\"*\";inherits:false;initial-value:1}@property --tw-scale-y{syntax:\"*\";inherits:false;initial-value:1}@property --tw-scale-z{syntax:\"*\";inherits:false;initial-value:1}@property --tw-translate-x{syntax:\"*\";inherits:false;initial-value:0}@property --tw-translate-y{syntax:\"*\";inherits:false;initial-value:0}@property --tw-translate-z{syntax:\"*\";inherits:false;initial-value:0}@property --tw-border-style{syntax:\"*\";inherits:false;initial-value:solid}@property --tw-gradient-position{syntax:\"*\";inherits:false}@property --tw-gradient-from{syntax:\"<color>\";inherits:false;initial-value:#0000}@property --tw-gradient-via{syntax:\"<color>\";inherits:false;initial-value:#0000}@property --tw-gradient-to{syntax:\"<color>\";inherits:false;initial-value:#0000}@property --tw-gradient-stops{syntax:\"*\";inherits:false}@property --tw-gradient-via-stops{syntax:\"*\";inherits:false}@property --tw-gradient-from-position{syntax:\"<length-percentage>\";inherits:false;initial-value:0%}@property --tw-gradient-via-position{syntax:\"<length-percentage>\";inherits:false;initial-value:50%}@property --tw-gradient-to-position{syntax:\"<length-percentage>\";inherits:false;initial-value:100%}@property --tw-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:\"*\";inherits:false}@property --tw-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:\"*\";inherits:false}@property --tw-inset-shadow-alpha{syntax:\"<percentage>\";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:\"*\";inherits:false}@property --tw-ring-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:\"*\";inherits:false}@property --tw-inset-ring-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:\"*\";inherits:false}@property --tw-ring-offset-width{syntax:\"<length>\";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:\"*\";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:\"*\";inherits:false;initial-value:0 0 #0000}@media (forced-colors:active){[type=checkbox]:checked,[type=radio]:checked{appearance:auto}[type=checkbox]:indeterminate{appearance:auto}[type=checkbox]:checked,[type=checkbox]:indeterminate,[type=radio]:checked{appearance:auto}}";
+const AppRootStyle0 = appRootCss;
 
 gsapWithCSS.registerPlugin(MotionPathHelper, MotionPathPlugin, MorphSVGPlugin, ScrambleTextPlugin, ScrollTrigger$1, ScrollToPlugin, SplitText);
 const AppRoot = class {
@@ -16011,7 +15920,7 @@ const AppRoot = class {
         this.circles.remove();
     }
     resetThisPlace() {
-        this.journeyViewed = localStorage.set('journeyViewed', 'false');
+        localStorage.setItem('journeyViewed', 'false');
         window.location.reload();
     }
     launchCV() {
@@ -16037,7 +15946,6 @@ const AppRoot = class {
     }
     playBiography() {
         let aboutitem = this.el.shadowRoot.querySelectorAll('#about p');
-        console.log(aboutitem);
         aboutitem.forEach(item => {
             gsapWithCSS.to(item, { duration: 1.2, delay: (item.attributes['data-id'].nodeValue / 4), x: 0, opacity: 1, ease: "expoScale" });
         });
@@ -16094,14 +16002,13 @@ const AppRoot = class {
             years--;
             months += 12;
         }
-        console.log(`Difference: ${years} years, ${months} months, ${days} days`);
         return `${years} years, ${months} months, ${days} days`;
     }
     componentWillLoad() {
         this.journeyViewed = localStorage.getItem('journeyViewed');
     }
     render() {
-        return (h("section", { key: 'adaccab9eff31a207830d472add617a608a9356e', id: "wrapper", class: "wrapper relative overflow-hidden w-screen h-screen", style: { "background-image": "url('./assets/texture.jpg')" } }, h("section", { key: 'b75ac17ca0e43e5dd0641abb96c8372247a2dd3a', id: "cvbg", class: "opacity-0 cvbg absolute w-screen h-screen flex items-end gap-[2%]", style: { "background-image": "url('./assets/cvbg.jpg')" } }, h("section", { key: '28004c26efa92164cfa1f747ef008ceea133eb90', id: "about", class: "about relative z-10" }, h("article", { key: '749d56aab5e8c0c4f45f3514a47e550b78e4c097' }, h("p", { key: '062166206662b0c2f33213818e4269fdf24a8a06', "data-id": "1" }, "Hello there, my name is Craig du Toit and I am a Front-End Engineer and as you can clearly see, I have a passion for animation and interactivity on the web."), h("p", { key: 'ade825fe0d6c6b87e6e8353441c6f75aa19965ba', "data-id": "2" }, "I have been working in the industry for 15 years and this serves as not only a demonstration of my craft but also a detailed breakdown of my recent work history, skills, tech stack and hobbies."), h("p", { key: 'dd802139f0f6627815ccbdb092a1a946c88c273b', "data-id": "3" }, "I aspire to be a dependable and ever eager colleague, a loving husband, a good father to my son - a 2 and half year old toddler with anger issues and my \"hopefully daughter\" newborn due in May 2026."), h("p", { key: 'e31e9a2dc31a5e940f32ec1e791b7a73cdc1902f', "data-id": "4" }, "My hobbies include running, playing padel with good friends and enjoying some seriously good food. I am a social and well spoken person and I don't have a hard time making lifelong friends."), h("div", { key: '6da24238c93e2b8a8fe91a38a3045dc1ea833dd5', id: "socials", class: "socials flex gap-2" }, h("a", { key: '19c66621648d12fd535704439ea78cb424542faf', href: "https://www.linkedin.com/in/craigddutoit/", target: "_blank" }, h("svg", { key: '283efc278c40c7f3b6bd790c0de33edf4410a739', id: "linkedin", class: "translate-y-100", xmlns: "http://www.w3.org/2000/svg", width: "36", height: "36", viewBox: "0 0 256 256" }, h("path", { key: 'a6cb288b05b6861b1b9298c4d5d0603410367560', fill: "#480eff", d: "M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4c-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.91 39.91 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186zM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009s9.851-22.014 22.008-22.016c12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97zM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453" })))))), h("section", { key: 'e3d2c23d7865a10c4f2da53829ec30a0b40b3aed', id: "skills", class: "skills tabbed" }, h("input", { key: '954d4c809c0bcf16139cc7a428eb9c6ba409795a', type: "radio", id: "tab1", name: "css-tabs", checked: true }), h("input", { key: 'be169a18e98b27b5c57e949b1729dec7f1909eef', type: "radio", id: "tab2", name: "css-tabs" }), h("input", { key: '4ee78cdba1b8d276df456a12de0f7d804b6112d6', type: "radio", id: "tab3", name: "css-tabs" }), h("ul", { key: '3a4ef10fc3f367d2d579759cf4cb3b941738c5f2', class: "tabs" }, h("li", { key: '9f2ded1ad8189eec8129b80b4a1e96e325cdd741', id: "skillstab1", class: "tab -translate-y-28" }, h("label", { key: 'da10a10c31bb8c8708fe5cf468f1721b59d8a3f2', htmlFor: "tab1" }, "Position Held")), h("li", { key: 'fb8b9c84c90966ec2e8092bdea93e8bad6fc8e96', id: "skillstab2", class: "tab -translate-y-28", onClick: () => this.playStack() }, h("label", { key: '45b3c530dca6f08b1263b2a130e90fcb0dd6297f', htmlFor: "tab2" }, "Stack")), h("li", { key: '1b6a774ee8046fed2dd75ccf10deaa8e86e26f27', id: "skillstab3", class: "tab -translate-y-28", onClick: () => this.playFuture() }, h("label", { key: '31c2c03a63e3a9dc80c29e25e3ae9326dc1f5fa2', htmlFor: "tab3" }, "The Future"))), h("main", { key: 'd5842b7854d6c563d13a827b92abdf0703df56c5', id: "history", class: "tab-content" }, h("article", { key: '7963a4dddbf1706b1db67ba20cb9678563d45800', class: "tab-item h-[458px]" }, h("h3", { key: '23322b38c95cdbba6511e68e54f1d5fa55064285', class: "opacity-0" }, "Software Developer - Team Lead | Promotions & Retention Marketing"), h("h5", { key: '5670df7897d02b3e8aec8ee89f9bc1c8a81d92c1', class: "opacity-0" }, "Osiris Trading \u00B7 Full-time"), h("h6", { key: 'f4aa34c4d1c27291b4662f339b2adef25b18afec', class: "opacity-0" }, "Nov 2021 - Present \u00B7 ", this.dateHandler('2021-11-01T10:00:00Z'), " "), h("div", { key: '7c44b9b09fc6761da52dda01dd0e5669be9a628a', class: "mt-4 mb-3 divider bg-gradient-to-r from-indigo-700 via-40% via-transparent to-transparent -translate-[120%]" }), h("div", { key: '64b71b887403d376aecf96adc964d8693e1be023', class: "flex flex-col h-full justify-between" }, h("div", { key: 'e00c11445e0b1eab6fb09af9707eb280da5547bc', id: "description", class: "description" }, h("p", { key: 'dc3a0f6d2060d3827c1c9d6a79f2eef3274b9788', "data-id": "1" }, "Building bespoke promotions focused on delivering engaging experiences for the global Betway Brand. Utilizing the latest technology to deliver fast, data efficient and visually stunning UI and UX projects. Working with a team of dedicated back-end and front-end engineers catering to both business and customer needs."), h("p", { key: 'df99c860a1069a1bd8a00b32e32ec01ae28f13f6', "data-id": "2" }, "I am in charge of project planning, understanding business requirements and delivering above expected quality on project delivery whilst standardizing team understanding to deliver similar results."), h("p", { key: 'f622b51a9fcd561f9c635dc8fd72129c641434dd', "data-id": "3" }, "Feel free to visit my ", h("a", { key: '90e2a1148fce8c2d8242a6632ffdf61ae9f8f00c', class: "text-indigo-700", href: "https://www.linkedin.com/in/craigddutoit/", target: "_blank" }, "LinkedIn Profile"), " for broader career experience.")), h("div", { key: '1113715803a0528f212ff3542699014a6252e8f2', class: "requirements" }, h("h5", { key: 'bdbfddbcaf56aecac2c5d881c68a9e5e9b2b1116' }, "Responsibilities:"), h("div", { key: 'bf1357e2898589b8b30ad8668d68415db175b4f1', id: "responsibilities", class: "flex gap-1 flex-wrap" }, h("p", { key: '55a04027277b585eb7d55ec6b7788556cf2ac08d', "data-id": "1" }, "Defining design"), h("p", { key: '2e15160c5166e439b82d9f351385a82325080709', "data-id": "2" }, "Developing Front-End"), h("p", { key: '215fc0240313351e4e9657c18bcd0ea5efc2fe0d', "data-id": "3" }, "Collaboration on Design Refinement"), h("p", { key: '81808b7a2d61cffbfe2d2bf0dd9f6ce2aa7642d0', "data-id": "4" }, "Collaboration on Back-end Data structures"), h("p", { key: '1eed96d99e59c86b98d21d248dc259378cd5b1e0', "data-id": "5" }, "Project Planning"), h("p", { key: '4a6302e9b6b32c2accf873d2d46bf1d9da16598a', "data-id": "6" }, "Team Planning"), h("p", { key: 'adf4e9e09c1544ca851520a9423048dbd960a91b', "data-id": "7" }, "Project Feedback sessions"), h("p", { key: '1634d339ba46427adf80e493440fb1c057e171bf', "data-id": "8" }, "Ongoing support of live software"), h("p", { key: '9216d3a09eee56ccc6233ee503b2007838d4a151', "data-id": "9" }, "Future Proofing Project Structures"), h("p", { key: '9a09d6719ac18ea340a0606e861e78a6926f808a', "data-id": "10" }, "Creation & Maintenance of Front-End Brand UI"), h("p", { key: '85e600c4a714908b0abf59fc7d666758530bdff7', "data-id": "11" }, "Mentorship & Training")))))), h("main", { key: '0f010dd3d6e7de96e70647642a30f81aefe14593', id: "stack", class: "tab-content flex flex-col gap-4 h-[458px]" }, h("article", { key: 'cdb1899d9ad643b9fc0796ea06854296e29164e7', "data-id": "1", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '8ebd20cf5a042af6b8f3ac2b84b38178a6e9c037', class: "item-title flex flex-col" }, h("h5", { key: '0668f6634240735a47a991426952e06ae9cabaee' }, "StencilJS"), " ", h("span", { key: 'acb9bfe914cca8cbaa80a2ec7cd6713ffda064fc' }, "4 YEARS")), h("div", { key: '417fa8295c373909ad783de0b3b36559b4ecd7cf', class: "flex w-full flex-col gap-2" }, h("h6", { key: '858b5db6a9ba10a754a05d3bc8c57f97da5ccd2c' }, "Knowledge"), h("div", { key: '889da0b0cc2bff2cb4a362185b070c5846d12535', class: "progress-bar knowledge" }, h("div", { key: 'b828a621d25151b7cd19493ca86c5132b64a24af', "data-id": "1", "data-progress": "90", class: "progress" }))), h("div", { key: '9a44dd782d5efffcc831814dfc914aa0e5c1b870', class: "flex w-full flex-col gap-2" }, h("h6", { key: '7b0c38955d3d7e2c4c62b1cf2d4d231d704f8d99' }, "Love"), h("div", { key: '50976af7f5bad9e44f449cd2fbf8a3f4b81d58ed', class: "progress-bar love" }, h("div", { key: '45e921941a57fd394d6871bb6477aa0d830848d9', "data-id": "1", "data-progress": "100", class: "progress" })))), h("article", { key: '2f9c7c52e5d97df02871723226216522110b1e45', "data-id": "2", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '4fe5f7e7840c3643d23fe6d843ce4a32ea9b7840', class: "item-title flex flex-col" }, h("h5", { key: 'cb3c0a8a4c7fff324c953e9c0821e7bec34f0847' }, "React"), " ", h("span", { key: 'f95e48af0801e6c158e145008c960856521a8039' }, "2 YEARS")), h("div", { key: '12939b4e296caf9c5e7e3af8c9334ec23fd63609', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'f13266651a29b666dc7361e984181c714f395106' }, "Knowledge"), h("div", { key: 'df7eb73e0a254afdeefc3fa79c6c4b00af7f6a68', class: "progress-bar knowledge" }, h("div", { key: 'a6c43bb5b1333fced3d28a2cc7487772fb616299', "data-id": "2", "data-progress": "70", class: "progress" }))), h("div", { key: '831f22f04a17d10b8325e0d4395072c6ffa0a548', class: "flex w-full flex-col gap-2" }, h("h6", { key: '2dbacf7673f3103edd5422e8541ab00d057b5d31' }, "Love"), h("div", { key: '12f16cf2af439689111a0b81ef199805d80cedb1', class: "progress-bar love" }, h("div", { key: 'bac564456ad33c29211537f49cd436a39d6733b8', "data-id": "2", "data-progress": "90", class: "progress" })))), h("article", { key: 'ec4cf604e680b0382e6b9fa423186181a68e66cd', "data-id": "3", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '952d1868e8d191aa2732d9db2ae409c760dee0ad', class: "item-title flex flex-col" }, h("h5", { key: '8c8957399280e3063eb7c50e746457e8f7730887' }, "Angular"), " ", h("span", { key: '7eccd631b288683e7e5ea93f648da4c3eb279b5e' }, "2 YEARS")), h("div", { key: 'd4d2482dbccc5f7cf7dc6ee5d11f4c8240405a44', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'e44cfc1d596cf3ab6463dfc94f0c0e6758d01810' }, "Knowledge"), h("div", { key: '58e9ac6adca0a2f3b6004cd75b6d6603a2fefbab', class: "progress-bar knowledge" }, h("div", { key: 'edd68f6fdd7ca2c89e20d3ee4aa332ca0277de3b', "data-id": "3", "data-progress": "70", class: "progress" }))), h("div", { key: '38a901cf236abdce93fe835c8fd9ffbb1bf12691', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'efe82d4c6bb2dac263e1e503ea23f797895bd1d7' }, "Love"), h("div", { key: '3a0941296f9415c8a35b166e6d48ea84d15e9e8f', class: "progress-bar love" }, h("div", { key: 'c4d1d620912888650afe4a0c2ae709ae6a32d37e', "data-id": "3", "data-progress": "70", class: "progress" })))), h("article", { key: '78f2d9063d1f3e1c0e524944587e80b2c2d62e5a', "data-id": "4", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: 'd940a3768d7e323348847aa37d64d279a28408b9', class: "item-title flex flex-col" }, h("h5", { key: 'bda7bfb6e1c01ddd5ce7ed4e9fe1d96b04d521b0' }, "TypeScript"), " ", h("span", { key: '7400a85a2532f7f28ce969c9fc57c6335f2d6cb3' }, "5 YEARS")), h("div", { key: '79c54639002276829764863eaeb0c758e5b3f48b', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'faf07bbfdb6a9a19d300c7082f152a70c584fdbe' }, "Knowledge"), h("div", { key: '2f9e9db84e3a312e89b69908aa9dbcc3048a161b', class: "progress-bar knowledge" }, h("div", { key: '783c1772e2191784a426a1e66ae6e1b8388de653', "data-id": "4", "data-progress": "80", class: "progress" }))), h("div", { key: 'a0bb53c4e2f0b518970caeb6ac58040c33f0adea', class: "flex w-full flex-col gap-2" }, h("h6", { key: '8af0d68d5be8b97e127af0249c8382b2d25b9dc7' }, "Love"), h("div", { key: 'c2e29a28fcf40e453c5c3b0640080ae752fff312', class: "progress-bar love" }, h("div", { key: 'a98751ec15a8774d9ecfd31c0b899beccf6a3c6d', "data-id": "4", "data-progress": "90", class: "progress" })))), h("article", { key: '5ef16144e43a88ba6b492cb2192ae5da3f373772', "data-id": "5", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '2384f5d98005554bc55653c3ef68d0c86087d0aa', class: "item-title flex flex-col" }, h("h5", { key: '02bafe17f590c26ec5bbc143ed0949efc36869ee' }, "GSAP"), " ", h("span", { key: 'fc03c04160626cdc2ab4d94f1bcbd629084483ff' }, "2 YEARS")), h("div", { key: '79100c2a3a920019a73cf630ec8f23407ab1b213', class: "flex w-full flex-col gap-2" }, h("h6", { key: '86c0de9e5edba4d53e0eea3dc9f0011675d87271' }, "Knowledge"), h("div", { key: 'cb150cc93f47e6172a3b4d46e85a9ac2ea304b90', class: "progress-bar knowledge" }, h("div", { key: '85710c4970c32d0c93ad95b701d47297249c2a11', "data-id": "5", "data-progress": "70", class: "progress" }))), h("div", { key: 'cd6de30f3de807d0afb7e24189de30571e2663a0', class: "flex w-full flex-col gap-2" }, h("h6", { key: '5391ba61b2cf700f2ab371cfd1f22babaec984a9' }, "Love"), h("div", { key: '5e0044bb6f4c3a6d38ab16c95877cafe424ad54e', class: "progress-bar love" }, h("div", { key: 'efe7f3310a3fc03cc26c29a65a0a6ed98bc0dd64', "data-id": "5", "data-progress": "100", class: "progress" })))), h("article", { key: '7b29e5b29b45de5d0bf01075f7dec78d60860781', "data-id": "6", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: 'f3a1905429e492c9abf77daebe93b9cbffc29c36', class: "item-title flex flex-col" }, h("h5", { key: '58ba6135b90b0f8a5f5bef5587b909b389142340' }, "TailwindCSS"), " ", h("span", { key: '733d3bfd9df33a66dcef88803eae3fdb68aea3a1' }, "3 YEARS")), h("div", { key: '63fe8bb02087408efaded9ba9cafd0c95d85bef0', class: "flex w-full flex-col gap-2" }, h("h6", { key: '558ded400b6f29dec36a1f2303f5128dd228b677' }, "Knowledge"), h("div", { key: 'fd9a44612d7af5ebadf0f702caa93caa7ff38ee7', class: "progress-bar knowledge" }, h("div", { key: '7b5bbdcec40d63f2d0625ffa16afab60bda5f24f', "data-id": "6", "data-progress": "90", class: "progress" }))), h("div", { key: '79a10e43661292f2231029374c07e3050b3338b2', class: "flex w-full flex-col gap-2" }, h("h6", { key: '66c9bea5c0cc7e675674e3bae462881e53436078' }, "Love"), h("div", { key: 'a8cbd0b35a4b0c35ffbba27e67a27c367fb77d15', class: "progress-bar love" }, h("div", { key: '02e17db817b5190dc5c5c17eb39209367044131b', "data-id": "6", "data-progress": "90", class: "progress" })))), h("article", { key: '765da4a2dc5e43d89e45bf81f9944c85a2e25c0c', "data-id": "7", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '235bc03e736a616ad9c0d0137fa7f7f8c7d323b2', class: "item-title flex flex-col" }, h("h5", { key: '1be4b9d16ab8905484625a247d2f6550fa666609' }, "CSS"), " ", h("span", { key: '9950fa1f3c670f215567ffdd8393e19618e93d7a' }, "15 YEARS")), h("div", { key: '9c8bc9cf23f02c2697de19ce0d04508b9acf70e8', class: "flex w-full flex-col gap-2" }, h("h6", { key: '24ffbd5acca9c8b731dcd6649df665adb21e4b8a' }, "Knowledge"), h("div", { key: 'd0a42f8c80cc3cb4769be9e4c0e26a355dc40798', class: "progress-bar knowledge" }, h("div", { key: 'c2cd3987d0060c2870264d1c58ba18d9d3185b79', "data-id": "7", "data-progress": "100", class: "progress" }))), h("div", { key: '989d506bf0fb5d0721d7353a4267528c8a25186b', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'afa936e02418e4093c5e0371b50c5d7fbceabd7f' }, "Love"), h("div", { key: '92a43e54903b193a8a24cf964a3d1dec5d2eb722', class: "progress-bar love" }, h("div", { key: '839fb1364ec95871e9e06b4b5507554fb4d22d2e', "data-id": "7", "data-progress": "100", class: "progress" })))), h("article", { key: '9511aa8349170f3b961aaf16149e544b5f62c830', "data-id": "8", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '999654976484cf1aedf94ef3f3f20e4f3ea53201', class: "item-title flex flex-col" }, h("h5", { key: 'a1b3c255fa6e9df933afbdbc4cc0afbefd012fdc' }, "Git"), " ", h("span", { key: '049c887166705cab462539be7560b18a82e845ee' }, "15 YEARS")), h("div", { key: '21c6abc9e9a301c311cacf8e60998e419dfb48f4', class: "flex w-full flex-col gap-2" }, h("h6", { key: '43eb696a9aa25dafe392569e3d05662f15fe4b3d' }, "Knowledge"), h("div", { key: '08eaa23e6c288ba490b7d6fca418650b0e9a4b54', class: "progress-bar knowledge" }, h("div", { key: '5ef9c5201f70d580025935799c92d5f8976a7f33', "data-id": "8", "data-progress": "80", class: "progress" }))), h("div", { key: 'f59600f2713450e8a048465df19b32a5c77fd89b', class: "flex w-full flex-col gap-2" }, h("h6", { key: '831b412c02a78d93bfc3606f5ab04f0c3caf07b1' }, "Love"), h("div", { key: '0507a71e691afd8e6b07cf44625b41bbad70823d', class: "progress-bar love" }, h("div", { key: '2fc26f031628704505e482aa49463345e34966dd', "data-id": "8", "data-progress": "100", class: "progress" }))))), h("main", { key: 'ca63bba44729f994da9b56115de1727362b229d6', id: "future", class: "tab-content" }, h("article", { key: '86dddfd173b49940bcce9cc4e46889455c44d785', class: "tab-item" }, h("p", { key: 'd171849410f3e82650955561cb41a6cdb48a850d', "data-id": "1" }, "I would not neccessarily say I am open to all offers when it comes to employment, I simultaneuosly enjoy what I do and where I am doing it which seems to be a rare thing these days, and therefore I have that wonderful luxury in being able to choose comfortably what comes next."), h("p", { key: 'ac2b07c253113a1755e25ffa8478fa83d61b4634', "data-id": "2" }, "With that being said, my mind does wander to what may lie for me out there, to what challenges await, perhaps an exciting endeavor, perhaps amazing people with enough passion about what they do that one can hardly pass up the offer."), h("p", { key: 'dc04eb83f3e97bbef9fa7e2bff684d41df2d22c7', "data-id": "3" }, "I believe in brands and business built on the love of the game, numbers are a conversation of course, but that love, that love for what you do and who you do it with... that makes one dream of waking up to the work ahead."), h("p", { key: '01add05107625a6a53ef4e7a8a740d5da93a555b', "data-id": "4" }, "Please feel free to contact me to discuss your passion and vision."), h("p", { key: '1e872ca051a36ea864c6a659506be4cc6e1d5d0b', "data-id": "5" }, "Mail me ", h("a", { key: '66d3b0d872df3b163b09febd19446ad3850d8498', href: "mailto: craigtoit@gmail.com", class: "text-indigo-700" }, "craigtoit@gmail.com"), "."))))), h("div", { key: '1e94eec5bb345638146b047a628de11f11baa29b', id: "logo", class: "logo opacity-0 absolute w-full z-0" }, h("img", { key: 'ceccb6dafc75d49618a16c509c0248b7dec0d3a7', class: "absolute -left-[278px]", src: "./assets/logo.png", alt: "" })), h("div", { key: 'e6c58337ab7f423fdcb9467ca9b75bcd757feac6', id: "circles", class: "concentric w-full h-screen absolute z-0" }, h("div", { key: 'bc142b8a3182f39d76281296e4d50ed0f1274d39', id: "circle-1" }), h("div", { key: '6c6d6ed38913251a93fb454ea3a07db0febb930a', id: "circle-2" }), h("div", { key: 'b3d15cfc3a0bdb8399fa7424244b4602da5fd3e1', id: "circle-3" }), h("div", { key: 'cffa83796b7af78e7369025b7243540f01e64589', id: "circle-4" })), h("article", { key: '38506895ae7c4ec8ed265983852cafd27b3adc80', id: "intro", class: "intro-actions flex flex-col absolute m-auto" }, h("p", { key: '5b9de8bc62ca3155bb168842d4a0de164fd757c9', class: "intro-text", id: "intro-1" }, "Well, what do we have here.... I don't recognize you, how did you get here?"), h("p", { key: '5419963f18b4c74cacbce68a235d625e43f01794', class: "intro-text", id: "intro-2" }, "I suppose the creator wanted you to be here, as far as I know he doesn't tell people about this place."), h("p", { key: 'd10679944eae22911b6f9ba31892ffa71d91dad5', class: "intro-text", id: "intro-3" }, "Whatever the case may be, the creator wanted you to be here. I guess we should have a look around."), h("div", { key: '2a293885cb2373464e97a52639cd805026df3eed', id: "look", class: "look w-full", onClick: () => this.launchCV() }, h("svg", { key: '5abdff717145a5d86fa5545f5f63beaa3738ee07', class: "mx-auto mt-8", xmlns: "http://www.w3.org/2000/svg", width: "112", height: "112", viewBox: "0 0 32 32" }, h("g", { key: '6deac6dec132f02cef9cee974122d95cc6fa0824', fill: "#ececec" }, h("path", { key: '21a5513980386c66036a2fd8959add52672f9242', d: "M21 16a5 5 0 1 1-9.643-1.86a2 2 0 1 0 2.784-2.784A5 5 0 0 1 21 16" }), h("path", { key: 'ce8869c4f572c5e34dc9387ba8fc64aae31f1bec', d: "M15.984 24.969a8.984 8.984 0 1 0 0-17.97a8.984 8.984 0 0 0 0 17.97m0-2a6.984 6.984 0 1 1 0-13.97a6.984 6.984 0 0 1 0 13.97" }), h("path", { key: '39c84ca73068c38cec12ba5253f94c910d58736c', d: "M16.156 30.313c7.819 0 14.157-6.338 14.157-14.157C30.313 8.338 23.975 2 16.156 2C8.338 2 2 8.338 2 16.156s6.338 14.157 14.156 14.157m0-2C9.443 28.313 4 22.87 4 16.156C4 9.443 9.443 4 16.156 4s12.157 5.443 12.157 12.156s-5.443 12.157-12.157 12.157" }))))), h("p", { key: '9d42570076954ee7a50389e488d0fb3340bc17e5', id: "footer", class: "footer absolute text-lg mx-auto w-fit h-fit font-sans" }, "Hand built with StencilJS + GSAP + Tailwind CSS \u00A0 [ ", h("span", { key: '5abcef144085be787d8666d0dcab55e58e7d684e', onClick: () => this.resetThisPlace() }, "Restart the journey"), " ]")));
+        return (h("section", { key: '5d2b61c97b9a04131d54d4311cc54f16515e015d', id: "wrapper", class: "wrapper relative overflow-hidden w-screen h-screen", style: { "background-image": "url('./assets/texture.jpg')" } }, h("section", { key: '27c62290a47c64d67885431583b43cd7bfe8fbd1', id: "cvbg", class: "opacity-0 cvbg absolute w-screen h-screen flex items-end gap-[2%]", style: { "background-image": "url('./assets/cvbg.jpg')" } }, h("section", { key: '1507ede979a44dd2306c4f156af90787c4f8a3d5', id: "about", class: "about relative z-10" }, h("article", { key: '55d00d901749abb8456fd31b1efbdd1fdd4beeba' }, h("p", { key: '10e14e4d516e9e76c3e2c885265c05fa231ce6b7', "data-id": "1" }, "Hello there, my name is Craig du Toit and I am a Front-End Engineer and as you can clearly see, I have a passion for animation and interactivity on the web."), h("p", { key: '28ac98c573c5a0566a65d5658a60a7a377577920', "data-id": "2" }, "I have been working in the industry for 15 years and this serves as not only a demonstration of my craft but also a detailed breakdown of my recent work history, skills, tech stack and hobbies."), h("p", { key: 'c68fbb5861538b17f82872ecf0c140a83c1562b0', "data-id": "3" }, "I aspire to be a dependable and ever eager colleague, a loving husband, a good father to my son - a 2 and half year old toddler with anger issues and my \"hopefully daughter\" newborn due in May 2026."), h("p", { key: 'b361e3757fe5849d5e9b3130750602f9c8ee8ba2', "data-id": "4" }, "My hobbies include running, playing padel with good friends and enjoying some seriously good food. I am a social and well spoken person and I don't have a hard time making lifelong friends."), h("div", { key: '7a710480619f13e904e83a6fb5772bac0e98004c', id: "socials", class: "socials flex gap-2" }, h("a", { key: '6139bfbea4bf1a3fd013e3e3b9881d3dc6bc79e8', href: "https://www.linkedin.com/in/craigddutoit/", target: "_blank" }, h("svg", { key: 'e60bb5af41e0be574877e0822607276786c65dc3', id: "linkedin", class: "translate-y-100", xmlns: "http://www.w3.org/2000/svg", width: "36", height: "36", viewBox: "0 0 256 256" }, h("path", { key: '03ff2d52a5687b7ead1c155491858b646b832ffc', fill: "#480eff", d: "M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4c-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.91 39.91 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186zM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009s9.851-22.014 22.008-22.016c12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97zM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453" })))))), h("section", { key: '87d97bef82149628b25762d5c215260e4e683644', id: "skills", class: "skills tabbed" }, h("input", { key: '9db6ceac8f14857d8774e27c9bbadb3e17e00b8f', type: "radio", id: "tab1", name: "css-tabs", checked: true }), h("input", { key: '614298a9d1e2ab73e67ba5cafcc0954a378de761', type: "radio", id: "tab2", name: "css-tabs" }), h("input", { key: '01257723e5b4807ab3d254e67ed987d6b684d73e', type: "radio", id: "tab3", name: "css-tabs" }), h("ul", { key: '1cd7a90575e3c9a2b82ba9694bf105f4768fc9d1', class: "tabs" }, h("li", { key: 'b4190c5878ba59849ceaac2d5f6cbdd647791936', id: "skillstab1", class: "tab -translate-y-28" }, h("label", { key: '6ae8283c367c74a62111317b993ea03dcc5eb694', htmlFor: "tab1" }, "Position Held")), h("li", { key: '9da4e6b74c6e9093f2a025c9646fcae311640e81', id: "skillstab2", class: "tab -translate-y-28", onClick: () => this.playStack() }, h("label", { key: '1601620ee45df59d224589bf7e6da9e6bf8bcf98', htmlFor: "tab2" }, "Stack")), h("li", { key: 'ea48ce6563772359c3e925e872675df512c235d5', id: "skillstab3", class: "tab -translate-y-28", onClick: () => this.playFuture() }, h("label", { key: '1eda3c10a43b196ceed1d539661dcf2d497b8d73', htmlFor: "tab3" }, "The Future"))), h("main", { key: '4fd9bc835824ecd280c2eb133e505ab0721a58b7', id: "history", class: "tab-content" }, h("article", { key: 'd84a3aec383aea99e6f232f64cfcfa28244d5b8e', class: "tab-item h-[458px]" }, h("h3", { key: '40a1e20fc4439cceb2ce95accd6db557d700d104', class: "opacity-0" }, "Software Developer - Team Lead | Promotions & Retention Marketing"), h("h5", { key: '93639f5cc7be4d991519a50bce76e246ce11c2d2', class: "opacity-0" }, "Osiris Trading \u00B7 Full-time"), h("h6", { key: '1960bea9a2be986800235a52c3ed6e823f8fa58e', class: "opacity-0" }, "Nov 2021 - Present \u00B7 ", this.dateHandler('2021-11-01T10:00:00Z'), " "), h("div", { key: '53e2a53319030cf110656939f6087e0cfc45f915', class: "mt-4 mb-3 divider bg-gradient-to-r from-indigo-700 via-40% via-transparent to-transparent -translate-[120%]" }), h("div", { key: '0ee074b8c746511fb3a812833042f004221319a9', class: "flex flex-col h-full justify-between" }, h("div", { key: '07090135093c03ada2698897e28b3851f4c38a76', id: "description", class: "description" }, h("p", { key: '301dfbad7a9452a1d375796058927367a11e4928', "data-id": "1" }, "Building bespoke promotions focused on delivering engaging experiences for the global Betway Brand. Utilizing the latest technology to deliver fast, data efficient and visually stunning UI and UX projects. Working with a team of dedicated back-end and front-end engineers catering to both business and customer needs."), h("p", { key: '6bef1ec3d27b37dc8541681a0972361292571c72', "data-id": "2" }, "I am in charge of project planning, understanding business requirements and delivering above expected quality on project delivery whilst standardizing team's understanding to deliver similar results."), h("p", { key: '629d379c97c09fd45194d20daaf69ab25ca5cc8a', "data-id": "3" }, "Feel free to visit my ", h("a", { key: 'bf66136c603a673d1997832b171081a629dfcd0d', class: "text-indigo-700", href: "https://www.linkedin.com/in/craigddutoit/", target: "_blank" }, "LinkedIn Profile"), " for broader career experience.")), h("div", { key: '86e3095b93c91f2235068d2980baae815f3d0736', class: "requirements" }, h("h5", { key: 'fa64e0f2a4a1d762bdfd016a0c814bce8a3dcf02' }, "Responsibilities:"), h("div", { key: 'eae2d235c22a90428b53e38745676de33a785e75', id: "responsibilities", class: "flex gap-1 flex-wrap" }, h("p", { key: '91c271011006491903d99003e8ba34606109c5e4', "data-id": "1" }, "Defining design"), h("p", { key: 'ddeedc3469d8d7039a18227ceeab77ffe19cf3e7', "data-id": "2" }, "Developing Front-End"), h("p", { key: 'b7b0f0e61bc5948793ed5be38a75aca6f50d8f69', "data-id": "3" }, "Collaboration on Design Refinement"), h("p", { key: 'ae9a5fdbb88fffbb327bb395f14a7171a5688999', "data-id": "4" }, "Collaboration on Back-end Data structures"), h("p", { key: '8c123096c3a43b4e0f634b2cdc11eea7556438ab', "data-id": "5" }, "Project Planning"), h("p", { key: '298315fe805b842b7024d58d2f53e8b6d9464969', "data-id": "6" }, "Team Planning"), h("p", { key: '595b67fa09dac39459c45104e30ffbd364df8ff2', "data-id": "7" }, "Project Feedback sessions"), h("p", { key: 'c6506c091bc6ef58c22f24222f67c13eda0dd0f2', "data-id": "8" }, "Ongoing support of live software"), h("p", { key: 'f9576f8b305c66559ad6147242870a5cec7106f1', "data-id": "9" }, "Future Proofing Project Structures"), h("p", { key: '5a6f22b57600b635cfc5918309aa245375ef965c', "data-id": "10" }, "Creation & Maintenance of Front-End Brand UI"), h("p", { key: 'd3ad6b76f20ebe13d865fa81a77dce45860faf04', "data-id": "11" }, "Mentorship & Training")))))), h("main", { key: '2ea0301f31397c7b3346fbd2f57bef5f7e6cb88b', id: "stack", class: "tab-content flex flex-col gap-4 h-[458px]" }, h("article", { key: '90187559c8b8d7a04d00a2954b8c26be3cf18548', "data-id": "1", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: 'a6d75c119c88d84318e887b8b700d1bece451ea7', class: "item-title flex flex-col" }, h("h5", { key: 'b087664da81fd380b79ca3dc1cf6b9fa0782ef7c' }, "StencilJS"), " ", h("span", { key: 'fc8d93501dfd40a9e43b43c9370cbd76ecee5568' }, "4 YEARS")), h("div", { key: '31be4803a0c876ad5edd112ea3eb33c57f875363', class: "flex w-full flex-col gap-2" }, h("h6", { key: '4976bf43254383b7e62a916cef5213e33c4f70d4' }, "Knowledge"), h("div", { key: '232194afbab68a9137e82ddd58ed764ae6934ba8', class: "progress-bar knowledge" }, h("div", { key: '0f64581cd8f8b4ac2e7e13cdc40dfc5f44da8dbc', "data-id": "1", "data-progress": "90", class: "progress" }))), h("div", { key: '95d496e3ea29250f4c206d6b9ec0f0456c171ee7', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'b11c109ad6113b66a454a60cd67f9e47eb2743af' }, "Love"), h("div", { key: '178fa07133440282927210f4b0b988f82a14b9d1', class: "progress-bar love" }, h("div", { key: 'a707bf9414ad489366c54babb1b4c0197dfd7db3', "data-id": "1", "data-progress": "100", class: "progress" })))), h("article", { key: 'aa1900ff9f39eac5ccafcf3f8d3e2a69426786b6', "data-id": "2", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: 'f2135c175e07b7109307849a137cb9d87bfcfc6a', class: "item-title flex flex-col" }, h("h5", { key: '4b26883ac0a88d14ff0ba5c3e1a1fcc70b7c9eba' }, "React"), " ", h("span", { key: 'e114a6473e92402c78c216eb4c1d7935d09749be' }, "2 YEARS")), h("div", { key: 'bf303e679d2640e1f6ab4413aa5c35faa5da0e67', class: "flex w-full flex-col gap-2" }, h("h6", { key: '507238ae505e317fa22010996d27149c5e617764' }, "Knowledge"), h("div", { key: '60fa3f7d27e1df1ca45050d3a074d1be3f03c358', class: "progress-bar knowledge" }, h("div", { key: '755b83cad869b7caa2206daebb17f4ef93dec441', "data-id": "2", "data-progress": "70", class: "progress" }))), h("div", { key: '9f2efd1ec6d1c361a3f4d91e2ac7230830567288', class: "flex w-full flex-col gap-2" }, h("h6", { key: '6beb1e8753be536ecf466b89c470d521f4af7071' }, "Love"), h("div", { key: '9ff1e7d63e3ec9016804a0b8f2be1dcf4f81e341', class: "progress-bar love" }, h("div", { key: 'd3260c68ad4a4af30f81ef3db8f830c17880d2f7', "data-id": "2", "data-progress": "90", class: "progress" })))), h("article", { key: '4d8cd2e3caf6da279e1ca2b91420d4ca45508528', "data-id": "3", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '0b360b0dad3fade384ea18c5e0ab8d7860904875', class: "item-title flex flex-col" }, h("h5", { key: '0cbdbad986773edd525380ac72c453d05762f343' }, "Angular"), " ", h("span", { key: '4836dc38bee19935a81894dad0b74674f3ae1c60' }, "2 YEARS")), h("div", { key: 'd218f008f05bbc67584646f753d72a96571d2432', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'fe601dde2935a21c2be93b65d9476bcaf8e91ccb' }, "Knowledge"), h("div", { key: 'a7772d556921046e98eb6afba1bf160fd1f460be', class: "progress-bar knowledge" }, h("div", { key: 'e98f2b9cb60188a6087cd9894b20f9f4a3a65805', "data-id": "3", "data-progress": "70", class: "progress" }))), h("div", { key: '152320463fa01edf4d1b67b3cd2844e625960965', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'de5d1bf78a23673172edfacd9c1e1dc732d9e8e8' }, "Love"), h("div", { key: 'fa6cb78260ca6bdcae7f3fa496ae769fda0f4a41', class: "progress-bar love" }, h("div", { key: '8a956b1e61113152ff8cfc0ed05f690c5c9f03ce', "data-id": "3", "data-progress": "70", class: "progress" })))), h("article", { key: 'd8a85b25e5d1d785c760385a0b52db92ddb86524', "data-id": "4", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: 'fa2315755301a09562dbc115a111eae4fec945f9', class: "item-title flex flex-col" }, h("h5", { key: 'c2d2bf02909ab9cd74853d293674d43e139c280d' }, "TypeScript"), " ", h("span", { key: 'a35433264fa9fff4721a31de6625254a0c053556' }, "5 YEARS")), h("div", { key: 'c59d6b9e674c1d9b26c3e81e1ca4be6825279cc8', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'e196f9130361953d7cda7eedbc40328df32ba830' }, "Knowledge"), h("div", { key: 'c4733cc54a6f31b3641122ae621fa7db032f0af6', class: "progress-bar knowledge" }, h("div", { key: '0af70be1d596bf078fc3fdda4187b8c793b087c1', "data-id": "4", "data-progress": "80", class: "progress" }))), h("div", { key: '927e3cf789663766bbebc1ca75bad5e0f83663e8', class: "flex w-full flex-col gap-2" }, h("h6", { key: '8e0f3dc705cfa810d834442ecc4fe83b9c1dfbf8' }, "Love"), h("div", { key: '8d0cadb1e45371d7c11062ec73bd0b7334650e21', class: "progress-bar love" }, h("div", { key: '3577a13bcb29948fd08c799561b77ddeaa7365c4', "data-id": "4", "data-progress": "90", class: "progress" })))), h("article", { key: '421e890eae324cddc1ec0e0f16bc4b0963895999', "data-id": "5", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '8713c700f94b4132913c090199834cbfa973dbd8', class: "item-title flex flex-col" }, h("h5", { key: '325cfa13b688d4365f383f7f831b15229e61fb92' }, "GSAP"), " ", h("span", { key: '0b6c77dbf695db2a84bf975c27ebce298d6b341d' }, "2 YEARS")), h("div", { key: '69ebfb195ea9d4307ab7e0ca1cb1a941983c5b25', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'eaf9db851046d9aada466fbb45d0e60c2b08abe1' }, "Knowledge"), h("div", { key: 'da78b33b676aab0cbf000af38b84412bbda8d274', class: "progress-bar knowledge" }, h("div", { key: 'd4dcca86acde6a91b48679559788cbd50c577569', "data-id": "5", "data-progress": "70", class: "progress" }))), h("div", { key: '4f01610ea07207f5122ec289f4cfdca4d4df6d00', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'cdafb1b6c4ae5b0e656c8b11b96e655f9d9abadd' }, "Love"), h("div", { key: '49b006949c2a0028bc6466d9f05688f31540d0ba', class: "progress-bar love" }, h("div", { key: '7e24f4be96fc6e147dbe6d4c25163a81ede21794', "data-id": "5", "data-progress": "100", class: "progress" })))), h("article", { key: '8a5a2e82fcafe66d2f2d2ce7f81d723517924e7c', "data-id": "6", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: 'cc3ae2479daa03d4d1be3d59e8fcaac25ca373c0', class: "item-title flex flex-col" }, h("h5", { key: '6afd75be26a26c48a6cde69f00a9dbfa84f7101e' }, "TailwindCSS"), " ", h("span", { key: 'e5474cd9c2721a634797d54fb47896fb04f43b41' }, "3 YEARS")), h("div", { key: 'a4d742b0c28ce03d7086f2029892d8d89855a1af', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'd40a5835be7a24e3c4865e06e4c05a7b331777e5' }, "Knowledge"), h("div", { key: 'f956cd4a062c389b30b8ea7b084069deb2ccf79e', class: "progress-bar knowledge" }, h("div", { key: '41de6c7f16e51140ac0be97c1bf90ab8dc3d72e4', "data-id": "6", "data-progress": "90", class: "progress" }))), h("div", { key: '1f33bb988603f236a486c239e34f7762838846f8', class: "flex w-full flex-col gap-2" }, h("h6", { key: '62b8a4a0c478410a6094665e8d57053bac43773c' }, "Love"), h("div", { key: '9384acdc45d43cc5ba73a51fda5d82f6ed72f830', class: "progress-bar love" }, h("div", { key: '8ade8d3673824e0c69c1d7c3e7803e65f9617933', "data-id": "6", "data-progress": "90", class: "progress" })))), h("article", { key: '1856f9c130b007019d081272bf10136be8180c34', "data-id": "7", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: '969580d15ecbce22b0fdc5cc1da2333ce7799395', class: "item-title flex flex-col" }, h("h5", { key: '40cc8d3d1b2d1bcd8403f0a49988b8d39292cdba' }, "CSS"), " ", h("span", { key: '921a3e21c7bb912530bd4abe20f6a6379055a1db' }, "15 YEARS")), h("div", { key: '083241d22e3c494a65b1b7572d92aaf904d230ff', class: "flex w-full flex-col gap-2" }, h("h6", { key: '62ecf6c15835b5d0e574cd72a825ba9a3a2e2ea1' }, "Knowledge"), h("div", { key: 'deb2fcad81b5a386a718c56c110c3d8c75bc7eb1', class: "progress-bar knowledge" }, h("div", { key: 'e2af81eb44db62e43578d4a6449244426eb10767', "data-id": "7", "data-progress": "100", class: "progress" }))), h("div", { key: '4b9cea38a0481d7e0a2d561e0528ce12873049d2', class: "flex w-full flex-col gap-2" }, h("h6", { key: 'caed78968b5a69ee90ab5608893c025a84de2a9f' }, "Love"), h("div", { key: 'f91fd057099c7cd3ed3276d076665e76055de311', class: "progress-bar love" }, h("div", { key: '3afd5b3ff48332296ed987c6c3f62d74d89dd2a1', "data-id": "7", "data-progress": "100", class: "progress" })))), h("article", { key: '7bfbe4fda8353b4511513032c3eac95d266f968c', "data-id": "8", class: "tab-item w-full flex gap-6 items-center" }, h("div", { key: 'a75692eccf7ccdbca99d2b03767e1b533c097cbf', class: "item-title flex flex-col" }, h("h5", { key: '9134fd5a91a8a1c685ca6eff9773447758779843' }, "Git"), " ", h("span", { key: '7dc551fa4100aaa379eeb74b733825a87af6e890' }, "15 YEARS")), h("div", { key: 'f7ed00d9f4f638e66e7ff5adc0d78fa12d5e7ef3', class: "flex w-full flex-col gap-2" }, h("h6", { key: '15f3f52aec1187d8b19a6480e84dd60a8d681006' }, "Knowledge"), h("div", { key: 'fc4704c55e43a18c7f4fb800e3c676f6868c2cd7', class: "progress-bar knowledge" }, h("div", { key: 'aa339b5006e13b41a6a8eb65267102a995f7c33b', "data-id": "8", "data-progress": "80", class: "progress" }))), h("div", { key: '0f4bc237188ff17bf8e61868b373333d4c983fe2', class: "flex w-full flex-col gap-2" }, h("h6", { key: '4d25b624cd0307d31d25e62a06e924a707c8ff6d' }, "Love"), h("div", { key: '8a7f795794109256db06b230dd26558de0e48d58', class: "progress-bar love" }, h("div", { key: '7e6ce095313b9eb56d561ea5066435ef2efac69a', "data-id": "8", "data-progress": "100", class: "progress" }))))), h("main", { key: '604f30255063fdd9574f3e6dfeeaed3f56c04fe5', id: "future", class: "tab-content" }, h("article", { key: 'd7e35f1e0eab2201403ae69084ea9d407573673e', class: "tab-item" }, h("p", { key: '044c3519213267434a375915b0b4b946ec64861c', "data-id": "1" }, "I would not neccessarily say I am open to all offers when it comes to employment, I simultaneuosly enjoy what I do and where I am doing it which seems to be a rare thing these days, and therefore I have that wonderful luxury in being able to choose comfortably what comes next."), h("p", { key: '9623fffe2f3b3465efc17a4bec7f33b4d120af76', "data-id": "2" }, "With that being said, my mind does wander to what may lie for me out there, to what challenges await, perhaps an exciting endeavor, perhaps amazing people with enough passion about what they do that one can hardly pass up the offer."), h("p", { key: '49f58cd3446517ab8bffbdb0f11e215f958d3b82', "data-id": "3" }, "I believe in brands and business built on the love of the game, numbers are a conversation of course, but that love, that love for what you do and who you do it with... that makes one dream of waking up to the work ahead."), h("p", { key: '81e9fdae11f6fa286248303e7aa8ba1467bc6906', "data-id": "4" }, "Please feel free to contact me to discuss your passion and vision."), h("p", { key: '7b167234386b3e7b3de94d87dd34f72260b170d6', "data-id": "5" }, "Mail me ", h("a", { key: '51f89324e5c76a9f2af76ee518f0f615a1805453', href: "mailto: craigtoit@gmail.com", class: "text-indigo-700" }, "craigtoit@gmail.com"), "."))))), h("div", { key: 'c3b507e3b1f974e052420fbf0db1d38d9bfdc196', id: "logo", class: "logo opacity-0 absolute w-full z-0" }, h("img", { key: 'f505d32de6e90580a320b84c452f9ef9109efd9b', class: "absolute -left-[278px]", src: "./assets/logo.png", alt: "" })), h("div", { key: 'd186d59973aad43616ca953c0f5b519e48e22200', id: "circles", class: "concentric w-full h-screen absolute z-0" }, h("div", { key: 'da776a8edea485e67365c4f4b9e05430eabcfe4c', id: "circle-1" }), h("div", { key: 'd45f846b92ce34a550b76dc764f664208a13dfc9', id: "circle-2" }), h("div", { key: '1d5a8f7b97abedf848d047ab6f3a02d33b0bd04b', id: "circle-3" }), h("div", { key: '340fc7054437e4f90c19e1cd384d09ec5fcaed1d', id: "circle-4" })), h("article", { key: '6af7456f1a84f645ad0a9f81b19da1d320efe7e4', id: "intro", class: "intro-actions flex flex-col absolute m-auto" }, h("p", { key: '9e9fab669fa0e9afe2817f84a82f2b4e093201bf', class: "intro-text", id: "intro-1" }, "Well, what do we have here.... I don't recognize you, how did you get here?"), h("p", { key: '146ba6a26a27786231b6dafcef05a1d82a2fcd7e', class: "intro-text", id: "intro-2" }, "I suppose the creator wanted you to be here, as far as I know he doesn't tell people about this place."), h("p", { key: '0a8c4fdbb2b10890cf87f92736b52d4e10e1558b', class: "intro-text", id: "intro-3" }, "Whatever the case may be, the creator wanted you to be here. I guess we should have a look around."), h("div", { key: '25c551e2e2dad6d353c614960252b83b11402ce2', id: "look", class: "look w-full", onClick: () => this.launchCV() }, h("svg", { key: '66c3dc5b73813ed372d90baf11d26e9d04985762', class: "mx-auto mt-8", xmlns: "http://www.w3.org/2000/svg", width: "112", height: "112", viewBox: "0 0 32 32" }, h("g", { key: '05ded71909329d79ea4c798bfcc123fb803a12ab', fill: "#ececec" }, h("path", { key: '95467225194d24e519cace26151f2721cd0c1262', d: "M21 16a5 5 0 1 1-9.643-1.86a2 2 0 1 0 2.784-2.784A5 5 0 0 1 21 16" }), h("path", { key: '88c278483ec3609b681f33adb1a287cc2d85ce8f', d: "M15.984 24.969a8.984 8.984 0 1 0 0-17.97a8.984 8.984 0 0 0 0 17.97m0-2a6.984 6.984 0 1 1 0-13.97a6.984 6.984 0 0 1 0 13.97" }), h("path", { key: 'a75b5e7d0a3bb083818990ae716e2f51e6a6b15e', d: "M16.156 30.313c7.819 0 14.157-6.338 14.157-14.157C30.313 8.338 23.975 2 16.156 2C8.338 2 2 8.338 2 16.156s6.338 14.157 14.156 14.157m0-2C9.443 28.313 4 22.87 4 16.156C4 9.443 9.443 4 16.156 4s12.157 5.443 12.157 12.156s-5.443 12.157-12.157 12.157" }))))), h("p", { key: '71a9dfff81bd7363e7696e9336638550840ba3a1', id: "footer", class: "footer absolute text-lg mx-auto w-fit h-fit font-sans" }, "Hand built with StencilJS + GSAP + Tailwind CSS \u00A0 [ ", h("span", { key: '3c2b17a15b5a160b50a7264601de22b579de7705', onClick: () => this.resetThisPlace() }, "Restart the journey"), " ]")));
     }
     componentDidLoad() {
         this.intro = this.el.shadowRoot.getElementById('intro');
@@ -16132,7 +16039,6 @@ const AppRoot = class {
         let split1 = SplitText.create(this.line1, { type: "chars" });
         let split2 = SplitText.create(this.line2, { type: "chars" });
         let split3 = SplitText.create(this.line3, { type: "chars" });
-        console.log('this.journeyViewed: ', this.journeyViewed);
         if (this.journeyViewed === 'true') {
             this.hideJourney();
             this.launchCV();
@@ -16169,7 +16075,7 @@ const AppRoot = class {
     }
     get el() { return getElement(this); }
 };
-AppRoot.style = appRootCss;
+AppRoot.style = AppRootStyle0;
 
 export { AppRoot as app_root };
 
