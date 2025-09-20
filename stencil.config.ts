@@ -1,0 +1,32 @@
+import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
+import tailwind, { tailwindHMR, setPluginConfigurationDefaults } from 'stencil-tailwind-plugin';
+
+setPluginConfigurationDefaults({
+  enableDebug: false,
+  tailwindCssPath: './src/styles/tailwind.css',
+});
+
+export const config: Config = {
+  namespace: 'cdt-cs',
+  outputTargets: [
+    {
+      type: 'dist',
+      esmLoaderPath: '../loader',
+    },
+    {
+      type: 'docs-readme',
+    },
+    {
+      type: 'www',
+      serviceWorker: null, // disable service workers
+      baseUrl: 'https://www.crayonblack.co.za',
+      dir: 'docs'
+    },
+  ],
+  plugins: [
+    sass(),
+    tailwind(),
+    tailwindHMR(),
+  ],
+};
