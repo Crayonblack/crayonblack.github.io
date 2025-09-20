@@ -71,7 +71,7 @@ export class AppRoot {
   }
 
   resetThisPlace(){
-    this.journeyViewed = localStorage.set('journeyViewed', 'false');
+    localStorage.setItem('journeyViewed', 'false');
     window.location.reload();
   }
 
@@ -99,7 +99,6 @@ export class AppRoot {
   
   playBiography(){
     let aboutitem = this.el.shadowRoot.querySelectorAll('#about p');
-    console.log(aboutitem);
     aboutitem.forEach(item => {
       gsap.to(item, { duration: 1.2, delay: (item.attributes['data-id'].nodeValue as unknown as number / 4), x: 0, opacity: 1, ease:  "expoScale"});
     });
@@ -164,7 +163,6 @@ export class AppRoot {
       years--;
       months += 12;
     }
-    console.log(`Difference: ${years} years, ${months} months, ${days} days`); 
     return `${years} years, ${months} months, ${days} days`;
   }
 
@@ -219,7 +217,7 @@ export class AppRoot {
                       Building bespoke promotions focused on delivering engaging experiences for the global Betway Brand. Utilizing the latest technology to deliver fast, data efficient and visually stunning UI and UX projects. Working with a team of dedicated back-end and front-end engineers catering to both business and customer needs.
                     </p>
                     <p data-id="2">
-                      I am in charge of project planning, understanding business requirements and delivering above expected quility on project delivery whilst standardizing team understanding to deliver similar results.
+                      I am in charge of project planning, understanding business requirements and delivering above expected quality on project delivery whilst standardizing team's understanding to deliver similar results.
                     </p>
                     <p data-id="3">
                       Feel free to visit my <a class="text-indigo-700" href="https://www.linkedin.com/in/craigddutoit/" target="_blank">LinkedIn Profile</a> for broader career experience.
@@ -461,7 +459,6 @@ export class AppRoot {
     let split2 = SplitText.create(this.line2, { type: "chars" });
     let split3 = SplitText.create(this.line3, { type: "chars" });
 
-    console.log('this.journeyViewed: ', this.journeyViewed);
     if(this.journeyViewed === 'true'){
       this.hideJourney();
       this.launchCV();
