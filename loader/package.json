@@ -1,5 +1,5 @@
 {
-  "name": "build-loader",
+  "name": "cdt-cs-loader",
   "private": true,
   "typings": "./index.d.ts",
   "module": "./index.js",

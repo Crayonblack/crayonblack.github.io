@@ -8,7 +8,7 @@ setPluginConfigurationDefaults({
 });
 
 export const config: Config = {
-  namespace: 'build',
+  namespace: 'cdt-cs',
   outputTargets: [
     {
       type: 'dist',

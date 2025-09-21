@@ -1,0 +1,279 @@
+
+body *{
+  @apply font-sans;
+}
+.wrapper{
+	height: 100vh;
+}
+
+h1,h2,h3,h4,h5,h6{
+  @apply font-title;
+}
+h1{
+  font-size: 48px;
+}
+h2{
+  font-size: 44px;
+}
+h3{
+  font-size: 40px;
+  line-height: 28px;
+}
+h4{
+  font-size: 36px;
+  line-height: 26px;
+}
+h5{
+  font-size: 32px;
+  line-height: 24px;
+  color: #444;
+}
+h6{
+  font-size: 28px;
+  line-height: 20px;
+  color: #666;
+}
+.concentric{
+  div{
+    @apply absolute inset-0 m-auto;
+    border-radius: 50%;
+    box-shadow:  10px 10px 20px rgba(75,75,75,0.6),
+                -10px -10px 20px #414141;
+    &:nth-child(1){
+      @apply w-[600px] h-[600px];
+      background: rgba(75, 75, 75, 0.2);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 9;
+    }
+    &:nth-child(2){
+      @apply w-[1000px] h-[1000px];
+      background: rgba(75, 75, 75, 0.2);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);      
+      z-index: 8;
+    }
+    &:nth-child(3){
+      @apply w-[1500px] h-[1500px];
+      background: rgba(75, 75, 75, 0.2);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);      
+      z-index: 7;
+    }
+    &:nth-child(4){
+      @apply w-[2100px] h-[2100px];
+      background: rgba(75, 75, 75, 0.2);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 6;
+    }
+    
+  }
+}
+.intro-actions{
+  @apply inset-0 h-fit w-fit;
+  .intro-text{
+    @apply text-center text-[#ececec] font-sans;
+    line-height: 48px;
+    font-size: 24px;
+  }
+  .look{
+    svg{
+      transition: all 0.3s ease;
+      &:hover{
+        @apply drop-shadow-lg drop-shadow-zinc-950;
+        transform: scale(1.2);
+        cursor: pointer;
+      }
+    }
+  }
+}
+.footer{
+  @apply text-[#ececec];
+  bottom: 10px;
+  left: 0px;
+  right: 0px;
+  span{
+    transition: all 0.3s ease;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
+.cvbg{
+  background-color: #ced2d6;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  padding: 0px 40px 70px 40px;
+}
+.about{
+  font-size: 18px;
+  width: 30%;
+  width: 30%;
+  padding: 20px;
+  height: 666px;
+  opacity: 0;
+  overflow: hidden;
+  border:1px solid #9e9e9e;
+  p{
+    transform: translatex(-120%);
+    opacity: 0;
+    margin-bottom: 16px;
+  }
+}
+.skills{
+  font-size: 18px;
+  width: 68%;
+  padding: 20px;
+  height: 666px;
+  opacity: 0;
+  overflow: hidden;
+  border:1px solid #9e9e9e;
+  h1{
+    @apply uppercase font-title;
+    font-size: 38px;
+  }
+}
+.socials{
+  svg{
+    transition: all 0.3s ease;
+    &:hover{
+      cursor: pointer;
+      box-shadow:  5px 5px 15px #888,
+                  -5px -5px 15px #ffffff;  
+    }
+  }
+}
+#history, #future{
+  transform: translateY(800px);
+}
+#future{
+  p{
+    transform: translateY(800px);
+    opacity: 0;
+    margin-bottom: 16px;
+  }
+}
+#biography1, #biography2, #biography3, #biography4{
+  transform: translatex(-120%);
+}
+#history{
+  .divider{
+    @apply w-full h-[3px] rounded-lg;
+  }
+  .description{
+    p{
+      transform: translateY(800px);
+      opacity: 0;      
+      margin-bottom: 16px;
+    }
+  }
+  .requirements{
+    p{
+      @apply py-1 px-2 text-[16px] text-indigo-50 rounded-sm scale-0;
+      transform-origin: center;
+      background: #4630db;
+    }
+  }
+}
+#stack{
+  .tab-item{
+    transform: translateY(1000px);
+    border-bottom: 1px solid #bfbfbf;
+    padding-bottom: 16px;
+    &:last-child{
+      border-bottom: 0px solid transparent;
+    }
+    span{
+      @apply text-indigo-700 font-title text-right;
+      font-size: 24px;
+      line-height: 16px;
+    }
+    .item-title{
+      min-width: 120px;
+      text-align: right;
+    }
+  }
+  .progress-bar{
+    width: min(100svw - 20px, 100%);
+    border-radius: 100vh;
+    background: #bfbfbf;
+    overflow: hidden;
+    cursor: pointer;
+    height: 8px;
+    
+    .progress{
+      width: 100%;
+      height: 100%;
+      transform: scaleX(0);
+      border-radius: inherit;
+      transform-origin: left center;
+    }
+    &.knowledge{
+      .progress{
+        background: linear-gradient(90deg, #4630db, rgb(162, 0, 255));
+      }
+    }
+    &.love{
+      .progress{
+        background: linear-gradient(90deg, #df5000, #a50000);
+      }
+    }
+  }
+}
+
+/* Tabs */
+
+.tabbed {
+	overflow-x: hidden; /* so we could easily hide the radio inputs */
+	padding-bottom: 16px;
+}
+
+.tabbed [type="radio"] {
+	/* hiding the inputs */
+	display: none;
+}
+
+.tabs {
+	display: flex;
+	align-items: stretch;
+	list-style: none;
+  gap: 10px;
+	padding: 0;
+}
+.tab > label {
+  @apply rounded-[25px] py-2 px-4;
+  color: #4630db;
+	display: block;
+	transition: all 0.3s;
+}
+.tab:hover label {
+	color: #fff;
+  cursor: pointer;
+  transform: scale(1.1);
+  background: linear-gradient(145deg, #4630db, rgb(162, 0, 255));
+  box-shadow:  10px 10px 30px #888,
+              -10px -10px 30px #ffffff;  
+}
+
+.tab-content {
+	display: none;
+	color: #141414;
+  padding-top: 20px;
+}
+
+/* As we cannot replace the numbers with variables or calls to element properties, the number of this selector parts is our tab count limit */
+.tabbed [type="radio"]:nth-of-type(1):checked ~ .tabs .tab:nth-of-type(1) label,
+.tabbed [type="radio"]:nth-of-type(2):checked ~ .tabs .tab:nth-of-type(2) label,
+.tabbed [type="radio"]:nth-of-type(3):checked ~ .tabs .tab:nth-of-type(3) label
+{
+  background: linear-gradient(145deg, #4630db, rgb(162, 0, 255));
+	color: #fff;
+}
+
+.tabbed [type="radio"]:nth-of-type(1):checked ~ .tab-content:nth-of-type(1),
+.tabbed [type="radio"]:nth-of-type(2):checked ~ .tab-content:nth-of-type(2),
+.tabbed [type="radio"]:nth-of-type(3):checked ~ .tab-content:nth-of-type(3)
+{
+	display: flex;
+}
