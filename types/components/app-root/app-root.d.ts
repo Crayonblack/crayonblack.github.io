@@ -1,16 +1,7 @@
 export declare class AppRoot {
-    private timeline;
     private intro;
     private circles;
-    private look;
     private logo;
-    private line1;
-    private line2;
-    private line3;
-    private circle1;
-    private circle2;
-    private circle3;
-    private circle4;
     private cvbg;
     private about;
     private skills;
@@ -26,18 +17,13 @@ export declare class AppRoot {
     private skillstab3;
     private footer;
     el: HTMLDivElement;
-    journeyViewed: string;
-    fadeLine(number: any): void;
-    hideLine(number: any): void;
     hideJourney(): void;
-    resetThisPlace(): void;
     launchCV(): void;
     playBiography(): void;
     playResponsibilities(): void;
     playStack(): void;
     playFuture(): void;
     dateHandler(past: any): string;
-    componentWillLoad(): void;
     render(): any;
     componentDidLoad(): void;
 }
