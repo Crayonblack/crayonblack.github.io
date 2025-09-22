@@ -33,61 +33,6 @@ h6{
   line-height: 20px;
   color: #666;
 }
-.concentric{
-  div{
-    @apply absolute inset-0 m-auto;
-    border-radius: 50%;
-    box-shadow:  10px 10px 20px rgba(75,75,75,0.6),
-                -10px -10px 20px #414141;
-    &:nth-child(1){
-      @apply w-[600px] h-[600px];
-      background: rgba(75, 75, 75, 0.2);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      z-index: 9;
-    }
-    &:nth-child(2){
-      @apply w-[1000px] h-[1000px];
-      background: rgba(75, 75, 75, 0.2);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);      
-      z-index: 8;
-    }
-    &:nth-child(3){
-      @apply w-[1500px] h-[1500px];
-      background: rgba(75, 75, 75, 0.2);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);      
-      z-index: 7;
-    }
-    &:nth-child(4){
-      @apply w-[2100px] h-[2100px];
-      background: rgba(75, 75, 75, 0.2);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      z-index: 6;
-    }
-    
-  }
-}
-.intro-actions{
-  @apply inset-0 h-fit w-fit;
-  .intro-text{
-    @apply text-center text-[#ececec] font-sans;
-    line-height: 48px;
-    font-size: 24px;
-  }
-  .look{
-    svg{
-      transition: all 0.3s ease;
-      &:hover{
-        @apply drop-shadow-lg drop-shadow-zinc-950;
-        transform: scale(1.2);
-        cursor: pointer;
-      }
-    }
-  }
-}
 .footer{
   @apply text-[#ececec];
   bottom: 10px;
@@ -104,14 +49,11 @@ h6{
   background-color: #ced2d6;
   background-repeat: no-repeat;
   background-position: bottom right;
-  padding: 0px 40px 70px 40px;
+  padding-bottom: 70px;
 }
 .about{
   font-size: 18px;
-  width: 30%;
-  width: 30%;
   padding: 20px;
-  height: 666px;
   opacity: 0;
   overflow: hidden;
   border:1px solid #9e9e9e;
@@ -123,9 +65,7 @@ h6{
 }
 .skills{
   font-size: 18px;
-  width: 68%;
   padding: 20px;
-  height: 666px;
   opacity: 0;
   overflow: hidden;
   border:1px solid #9e9e9e;
@@ -226,7 +166,6 @@ h6{
 
 .tabbed {
 	overflow-x: hidden; /* so we could easily hide the radio inputs */
-	padding-bottom: 16px;
 }
 
 .tabbed [type="radio"] {
@@ -239,7 +178,7 @@ h6{
 	align-items: stretch;
 	list-style: none;
   gap: 10px;
-	padding: 0;
+  margin-bottom: 14px;
 }
 .tab > label {
   @apply rounded-[25px] py-2 px-4;
@@ -259,7 +198,6 @@ h6{
 .tab-content {
 	display: none;
 	color: #141414;
-  padding-top: 20px;
 }
 
 /* As we cannot replace the numbers with variables or calls to element properties, the number of this selector parts is our tab count limit */
@@ -276,4 +214,86 @@ h6{
 .tabbed [type="radio"]:nth-of-type(3):checked ~ .tab-content:nth-of-type(3)
 {
 	display: flex;
+}
+
+@media screen and (max-width: 1600px){
+  #stack .content, #about article, #history article, #future article {
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 6px;
+      border-radius: 6px;
+      background: rgb(161, 161, 161);
+    }
+    
+    &::-webkit-scrollbar-track {
+      box-shadow: 0 0 6px rgb(161, 161, 161);
+      border-radius: 6px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: rgb(0, 0, 0);
+      border-radius: 6px;
+    }
+  }  
+}
+
+@media screen and (max-width: 768px){
+  h1{
+    font-size: 38px;
+  }
+  h2{
+    font-size: 34px;
+  }
+  h3{
+    font-size: 30px;
+    line-height: 28px;
+  }
+  h4{
+    font-size: 26px;
+    line-height: 26px;
+  }
+  h5{
+    font-size: 24px;
+    line-height: 24px;
+  }
+  h6{
+    font-size: 22px;
+    line-height: 20px;
+  }
+  p{
+    font-size: 14px;
+  }
+  .tab > label {
+    @apply rounded-[25px] py-1 px-2;
+    color: #4630db;
+    display: block;
+    font-size: 16px;
+    transition: all 0.3s;
+  }  
+  #history .requirements{
+    p{
+      @apply py-[3px] px-[6px] text-[14px];
+    }
+  }  
+  #stack{
+    .tab-item{
+      .item-title{
+        min-width: 90px;
+      }  
+    }
+  }
+  .tab:hover label {
+    cursor: pointer;
+    transform: scale(1);
+    background: linear-gradient(145deg, #4630db, rgb(162, 0, 255));
+    box-shadow:  0px 0px 0px transparent,
+                -0px -0px 0px transparent;  
+  }
+  .tab-content{
+    padding-bottom: 50px;
+  }
+}
+
+@media screen and (max-width: 480px){
+
 }

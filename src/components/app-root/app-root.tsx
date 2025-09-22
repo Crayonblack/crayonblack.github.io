@@ -1,4 +1,4 @@
-import { Component, Element, State, h } from '@stencil/core';
+import { Component, Element, h } from '@stencil/core';
 
 import { gsap } from "gsap";
     
@@ -19,19 +19,10 @@ gsap.registerPlugin(MotionPathHelper,MotionPathPlugin,MorphSVGPlugin,ScrambleTex
 })
 
 export class AppRoot {
-  private timeline = gsap.timeline();
   private intro: HTMLElement;
   private circles: HTMLElement;
 
-  private look: HTMLElement;
   private logo: HTMLElement;
-  private line1: HTMLElement;
-  private line2: HTMLElement;
-  private line3: HTMLElement;
-  private circle1: HTMLElement;
-  private circle2: HTMLElement;
-  private circle3: HTMLElement;
-  private circle4: HTMLElement;
   private cvbg: HTMLElement;
   private about: HTMLElement;
   private skills: HTMLElement;
@@ -46,43 +37,15 @@ export class AppRoot {
   private skillstab2: HTMLElement;
   private skillstab3: HTMLElement;
   private footer: HTMLElement;
+
   @Element() el: HTMLDivElement;
-  @State() journeyViewed: string = 'false';
-
-  fadeLine(number){
-    if(number === 1){
-      this.timeline.to(this.line1, { duration: 1, delay: 2, opacity: 0.3, scale: 0.8, translateY: -30, ease:  "expoScale", onComplete: () => this.hideLine(1) });
-    } else {
-      this.timeline.to(this.line2, { duration: 1, delay: 0, opacity: 0.6, scale: 0.9, translateY: -15, ease:  "expoScale", onComplete: () => this.hideLine(2) });
-    }
-  }
-
-  hideLine(number){
-    if(number === 1){
-      gsap.to(this.line1, { duration: 1, delay: 7, opacity: 0, ease:  "expoScale" });
-    } else {
-      gsap.to(this.line2, { duration: 1, delay: 3, opacity: 0, });
-    }
-  }
 
   hideJourney(){
     this.intro.remove();
     this.circles.remove();
   }
 
-  resetThisPlace(){
-    localStorage.setItem('journeyViewed', 'false');
-    window.location.reload();
-  }
-
   launchCV(){
-    localStorage.setItem('journeyViewed', 'true');
-    gsap.to(this.line3, { duration: 2, delay: 0.2, y: -100, opacity: 0, scale: 0,  ease:  "expoScale"});
-    gsap.to(this.look, { duration: 2, delay: 0.5, opacity: 0, y: 100, ease:  "expoScale" });
-    gsap.to(this.circle1, { duration: 4, delay: 1, scale: 6, opacity: 0, ease:  "expoScale",});
-    gsap.to(this.circle2, { duration: 4, delay: 0.9, scale: 5, opacity: 0, ease:  "expoScale",});
-    gsap.to(this.circle3, { duration: 4, delay: 0.8, scale: 4, opacity: 0, ease:  "expoScale",});
-    gsap.to(this.circle4, { duration: 4, delay: 0.7, scale: 3, opacity: 0, ease:  "expoScale", onComplete: () => this.hideJourney() });
     gsap.to(this.logo, { duration: 2, delay: 1, opacity: 1, ease:  "slow"});
     gsap.to(this.cvbg, { duration: 2, delay: 2, opacity: 1, ease:  "slow"});
     gsap.to(this.about, { duration: 2, delay: 3, y: 0, opacity: 1, ease:  "expoScale"});
@@ -166,17 +129,13 @@ export class AppRoot {
     return `${years} years, ${months} months, ${days} days`;
   }
 
-  componentWillLoad() {
-    this.journeyViewed = localStorage.getItem('journeyViewed');
-  }
-
   render() {
     return (
-      <section id="wrapper" class="wrapper relative overflow-hidden w-screen h-screen" style={{"background-image": "url('./assets/texture.jpg')"}}>
-        <section id="cvbg" class="opacity-0 cvbg absolute w-screen h-screen flex items-end gap-[2%]" style={{"background-image": "url('./assets/cvbg.jpg')"}}>
+      <section id="wrapper" class="wrapper relative w-screen min-h-screen h-fit" style={{"background-image": "url('./assets/texture.jpg')"}}>
+        <section id="cvbg" class="opacity-0 cvbg pt-[70px] px-5 2xl:px-10 2xl:pt-0 absolute w-screen h-screen flex flex-col 2xl:flex-row justify-end 2xl:items-end 2xl:justify-center gap-[2%]" style={{"background-image": "url('./assets/cvbg.jpg')"}}>
           {/* Biography */}
-          <section id="about" class="about relative z-10">           
-            <article>            
+          <section id="about" class="about w-full h-[38%] 2xl:w-[30%] 2xl:h-[666px] relative z-10">           
+            <article class="h-full pr-3 2xl:pr-0">            
               <p data-id="1">
                 Hello there, my name is Craig du Toit and I am a Front-End Engineer and as you can clearly see, I have a passion for animation and interactivity on the web. 
               </p>
@@ -194,7 +153,7 @@ export class AppRoot {
               </div>
             </article>
           </section>
-          <section id="skills" class="skills tabbed">
+          <section id="skills" class="skills w-full h-[60%] 2xl:w-[68%] 2xl:h-[666px] tabbed relative z-10">
             <input type="radio" id="tab1" name="css-tabs" checked/>
             <input type="radio" id="tab2" name="css-tabs"/>
             <input type="radio" id="tab3" name="css-tabs"/>
@@ -205,8 +164,8 @@ export class AppRoot {
               <li id="skillstab3" class="tab -translate-y-28" onClick={() => this.playFuture()}><label htmlFor="tab3">The Future</label></li>
             </ul>
             
-            <main id="history" class="tab-content">            
-              <article class="tab-item h-[458px]">
+            <main id="history" class="tab-content h-full">            
+              <article class="tab-item h-full 2xl:h-[458px] pr-3 2xl:pr-0">
                 <h3 class="opacity-0">Software Developer - Team Lead | Promotions & Retention Marketing</h3>
                 <h5 class="opacity-0">Osiris Trading · Full-time</h5>
                 <h6 class="opacity-0">Nov 2021 - Present · {this.dateHandler('2021-11-01T10:00:00Z')} </h6>
@@ -242,146 +201,148 @@ export class AppRoot {
                 </div>
               </article>
             </main>
-            <main id="stack" class="tab-content flex flex-col gap-4 h-[458px]">            
-              <article data-id="1" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>StencilJS</h5> <span>4 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="1" data-progress="90" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="1" data-progress="100" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
-              <article data-id="2" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>React</h5> <span>2 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="2" data-progress="70" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="2" data-progress="90" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
-              <article data-id="3" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>Angular</h5> <span>2 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="3" data-progress="70" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="3" data-progress="70" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
-              <article data-id="4" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>TypeScript</h5> <span>5 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="4" data-progress="80" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="4" data-progress="90" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
-              <article data-id="5" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>GSAP</h5> <span>2 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="5" data-progress="70" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="5" data-progress="100" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
-              <article data-id="6" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>TailwindCSS</h5> <span>3 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="6" data-progress="90" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="6" data-progress="90" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
-              <article data-id="7" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>CSS</h5> <span>15 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="7" data-progress="100" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="7" data-progress="100" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
-              <article data-id="8" class="tab-item w-full flex gap-6 items-center">
-                <div class="item-title flex flex-col">
-                  <h5>Git</h5> <span>15 YEARS</span>
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Knowledge</h6>
-                  <div class="progress-bar knowledge">
-                    <div data-id="8" data-progress="80" class="progress"></div>
-                  </div>                  
-                </div>
-                <div class="flex w-full flex-col gap-2">
-                  <h6>Love</h6>
-                  <div class="progress-bar love">
-                    <div data-id="8" data-progress="100" class="progress"></div>
-                  </div>                  
-                </div>
-              </article>
+            <main id="stack" class="tab-content h-full 2xl:h-[458px]">
+              <div class="content w-full h-full flex flex-col gap-4 pr-3 2xl:pr-0">
+                <article data-id="1" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>StencilJS</h5> <span>4 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="1" data-progress="90" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="1" data-progress="100" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>
+                <article data-id="2" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>React</h5> <span>2 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="2" data-progress="70" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="2" data-progress="90" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>
+                <article data-id="3" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>Angular</h5> <span>2 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="3" data-progress="70" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="3" data-progress="70" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>
+                <article data-id="4" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>TypeScript</h5> <span>5 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="4" data-progress="80" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="4" data-progress="90" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>
+                <article data-id="5" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>GSAP</h5> <span>2 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="5" data-progress="70" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="5" data-progress="100" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>
+                <article data-id="6" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>TailwindCSS</h5> <span>3 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="6" data-progress="90" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="6" data-progress="90" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>
+                <article data-id="7" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>CSS</h5> <span>15 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="7" data-progress="100" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="7" data-progress="100" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>
+                <article data-id="8" class="tab-item w-full flex gap-6 items-center">
+                  <div class="item-title flex flex-col">
+                    <h5>Git</h5> <span>15 YEARS</span>
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Knowledge</h6>
+                    <div class="progress-bar knowledge">
+                      <div data-id="8" data-progress="80" class="progress"></div>
+                    </div>                  
+                  </div>
+                  <div class="flex w-full flex-col gap-2">
+                    <h6>Love</h6>
+                    <div class="progress-bar love">
+                      <div data-id="8" data-progress="100" class="progress"></div>
+                    </div>                  
+                  </div>
+                </article>                
+              </div>            
             </main>
-            <main id="future" class="tab-content">            
-              <article class="tab-item">
+            <main id="future" class="tab-content h-full">            
+              <article class="tab-item h-full pr-3 2xl:pr-0">
                 <p data-id="1">
                   I would not neccessarily say I am open to all offers when it comes to employment, I simultaneuosly enjoy what I do and where I am doing it which seems to be a rare thing these days, and therefore I have that wonderful luxury in being able to choose comfortably what comes next.
                 </p>
@@ -404,22 +365,8 @@ export class AppRoot {
         <div id="logo" class="logo opacity-0 absolute w-full z-0">
           <img class="absolute -left-[278px]" src="./assets/logo.png" alt="" />
         </div>
-        <div id="circles" class="concentric w-full h-screen absolute z-0">
-          <div id="circle-1"></div>
-          <div id="circle-2"></div>
-          <div id="circle-3"></div>
-          <div id="circle-4"></div>
-        </div>
-        <article id="intro" class="intro-actions flex flex-col absolute m-auto">
-          <p class="intro-text" id="intro-1">Well, what do we have here.... I don't recognize you, how did you get here?</p>
-          <p class="intro-text" id="intro-2">I suppose the creator wanted you to be here, as far as I know he doesn't tell people about this place.</p>
-          <p class="intro-text" id="intro-3">Whatever the case may be, the creator wanted you to be here. I guess we should have a look around.</p>
-          <div id="look" class="look w-full" onClick={() => this.launchCV()}>
-            <svg class="mx-auto mt-8" xmlns="http://www.w3.org/2000/svg" width="112" height="112" viewBox="0 0 32 32"><g fill="#ececec"><path d="M21 16a5 5 0 1 1-9.643-1.86a2 2 0 1 0 2.784-2.784A5 5 0 0 1 21 16"/><path d="M15.984 24.969a8.984 8.984 0 1 0 0-17.97a8.984 8.984 0 0 0 0 17.97m0-2a6.984 6.984 0 1 1 0-13.97a6.984 6.984 0 0 1 0 13.97"/><path d="M16.156 30.313c7.819 0 14.157-6.338 14.157-14.157C30.313 8.338 23.975 2 16.156 2C8.338 2 2 8.338 2 16.156s6.338 14.157 14.156 14.157m0-2C9.443 28.313 4 22.87 4 16.156C4 9.443 9.443 4 16.156 4s12.157 5.443 12.157 12.156s-5.443 12.157-12.157 12.157"/></g></svg>
-          </div>
-        </article>
         <p id="footer" class="footer absolute text-lg mx-auto w-fit h-fit font-sans">
-          Hand built with StencilJS + GSAP + Tailwind CSS &nbsp; [ <span onClick={() => this.resetThisPlace()}>Restart the journey</span> ]
+          Hand built with StencilJS + GSAP + Tailwind CSS
         </p>
       </section>
     );
@@ -442,77 +389,12 @@ export class AppRoot {
     this.skillstab3 = this.el.shadowRoot.getElementById('skillstab3');
     this.footer = this.el.shadowRoot.getElementById('footer');
 
-    this.look = this.el.shadowRoot.getElementById('look');
     this.logo = this.el.shadowRoot.getElementById('logo');
     this.cvbg = this.el.shadowRoot.getElementById('cvbg');
 
-    this.line1 = this.el.shadowRoot.getElementById('intro-1');
-    this.line2 = this.el.shadowRoot.getElementById('intro-2');
-    this.line3 = this.el.shadowRoot.getElementById('intro-3');
+    this.launchCV();
 
-    this.circle1 = this.el.shadowRoot.getElementById('circle-1');
-    this.circle2 = this.el.shadowRoot.getElementById('circle-2');
-    this.circle3 = this.el.shadowRoot.getElementById('circle-3');
-    this.circle4 = this.el.shadowRoot.getElementById('circle-4');
-
-    let split1 = SplitText.create(this.line1, { type: "chars" });
-    let split2 = SplitText.create(this.line2, { type: "chars" });
-    let split3 = SplitText.create(this.line3, { type: "chars" });
-
-    if(this.journeyViewed === 'true'){
-      this.hideJourney();
-      this.launchCV();
-    }
-
-    gsap.from(split1.chars, {
-      duration: 1, 
-      y: 40,
-      autoAlpha: 0,
-      delay: 0,
-      stagger: 0.03,
-      onComplete: () => this.fadeLine(1)
-    });
-    gsap.from(split2.chars, {
-      duration: 2,
-      delay: 5, 
-      y: 40,
-      autoAlpha: 0,
-      stagger: 0.03,
-      onComplete: () => this.fadeLine(2)
-    });
-    gsap.from(split3.chars, {
-      duration: 2,
-      delay: 10, 
-      y: 40,
-      autoAlpha: 0, 
-      stagger: 0.03
-    });
-    gsap.fromTo(
-      this.look,
-      {opacity: 0, y: 140},
-      {opacity: 1, y:0, duration: 2, delay: 14, ease: "expoScale"}
-    )
-    // end
-    gsap.fromTo(
-      this.circle1,
-      {scale: 0.9},
-      {scale: 1.1, duration: 2, yoyo: true, ease: "ease", delay: 2, repeat: -1, repeatDelay: 6}
-    )
-    gsap.fromTo(
-      this.circle2,
-      {scale: 0.9},
-      {scale: 1.1, duration: 2, yoyo: true, ease: "ease", delay: 2.5, repeat: -1, repeatDelay: 6}
-    )
-    gsap.fromTo(
-      this.circle3,
-      {scale: 0.9},
-      {scale: 1.1, duration: 2, yoyo: true, ease: "ease", delay: 3, repeat: -1, repeatDelay: 6}
-    )
-    gsap.fromTo(
-      this.circle4,
-      {scale: 0.9},
-      {scale: 1.1, duration: 2, yoyo: true, ease: "ease", delay: 3.5, repeat: -1, repeatDelay: 6}
-    )
+  
   }
 
 }
